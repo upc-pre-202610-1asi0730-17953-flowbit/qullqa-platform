@@ -9,7 +9,7 @@ using Microsoft.Extensions.Localization;
 // For OperationCanceledException
 
 
-namespace Flowbit.Qullqa.Shared.Infrastructure.Pipeline.Middleware.Components;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Pipeline.Middleware.Components;
 
 
 /// <summary>
