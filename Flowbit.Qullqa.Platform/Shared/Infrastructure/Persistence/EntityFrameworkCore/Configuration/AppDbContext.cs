@@ -7,7 +7,7 @@ namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFramew
 
 
 /// <summary>
-///     Application database context for the Learning Center Platform
+///     Application database context for the Qullqa platform
 /// </summary>
 /// <param name="options">
 ///     The options for the database context
