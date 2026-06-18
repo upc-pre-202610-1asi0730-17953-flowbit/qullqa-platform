@@ -38,6 +38,10 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>CommonMessages.en.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Shared\Resources\CommonMessages.es.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>CommonMessages.es.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>
