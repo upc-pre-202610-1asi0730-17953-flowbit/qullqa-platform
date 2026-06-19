@@ -1,3 +1,3 @@
-namespace Qullqa.Platform.Alerts.Domain.Model.Enums;
+namespace Flowbit.Qullqa.Platform.Alerts.Domain.Model.Enums;
 
 public enum AlertSeverity { High, Medium, Low }
