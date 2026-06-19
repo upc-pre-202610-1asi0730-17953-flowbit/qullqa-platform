@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
+using Qullqa.Platform.Shared.Domain.Model.Entities;
 
-namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
+namespace Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 
 public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
 {

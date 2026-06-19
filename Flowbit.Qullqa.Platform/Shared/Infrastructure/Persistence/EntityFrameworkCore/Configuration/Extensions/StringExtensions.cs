@@ -1,6 +1,6 @@
 using Humanizer;
 
-namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+namespace Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 
 public static class StringExtensions
 {

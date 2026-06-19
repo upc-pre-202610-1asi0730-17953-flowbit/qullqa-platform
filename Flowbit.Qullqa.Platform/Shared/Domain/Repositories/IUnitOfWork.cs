@@ -1,4 +1,4 @@
-namespace Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
+namespace Qullqa.Platform.Shared.Domain.Repositories;
 
 public interface IUnitOfWork
 {

@@ -1,4 +1,4 @@
-namespace Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
+namespace Qullqa.Platform.Shared.Domain.Model.Entities;
 
 public interface IAuditableEntity
 {

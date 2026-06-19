@@ -2,7 +2,7 @@ using System.Net.Mime;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Pipeline.Middleware.Components;
+namespace Qullqa.Platform.Shared.Infrastructure.Pipeline.Middleware.Components;
 
 public class GlobalExceptionHandlerMiddleware(
     RequestDelegate next,
