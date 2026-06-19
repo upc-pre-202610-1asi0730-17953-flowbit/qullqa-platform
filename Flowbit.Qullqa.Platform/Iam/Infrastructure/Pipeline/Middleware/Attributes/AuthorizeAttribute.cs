@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Qullqa.Platform.Iam.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
 
-namespace Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
+namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class AuthorizeAttribute : Attribute, IAuthorizationFilter
