@@ -1,7 +1,7 @@
-using Qullqa.Platform.Sales.Domain.Model.Aggregates;
-using Qullqa.Platform.Sales.Interfaces.Rest.Resources;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Resources;
 
-namespace Qullqa.Platform.Sales.Interfaces.Rest.Transform;
+namespace Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Transform;
 
 public static class CustomerResourceFromEntityAssembler
 {
