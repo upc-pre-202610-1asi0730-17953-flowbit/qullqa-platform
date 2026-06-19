@@ -1,6 +1,6 @@
-using Qullqa.Platform.Product.Interfaces.Rest.Resources;
+using Flowbit.Qullqa.Platform.Product.Interfaces.Rest.Resources;
 
-namespace Qullqa.Platform.Product.Interfaces.Rest.Transform;
+namespace Flowbit.Qullqa.Platform.Product.Interfaces.Rest.Transform;
 
 public static class ProductResourceFromEntityAssembler
 {
