@@ -1,7 +1,7 @@
-using Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
-using Qullqa.Platform.Suppliers.Interfaces.Rest.Resources;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest.Resources;
 
-namespace Qullqa.Platform.Suppliers.Interfaces.Rest.Transform;
+namespace Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest.Transform;
 
 public static class PurchaseOrderResourceFromEntityAssembler
 {
