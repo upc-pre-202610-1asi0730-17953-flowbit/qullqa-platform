@@ -1,7 +1,7 @@
-using Qullqa.Platform.Alerts.Domain.Model.Enums;
-using Qullqa.Platform.Shared.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Enums;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
 
-namespace Qullqa.Platform.Alerts.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Alerts.Domain.Model.Aggregates;
 
 public class Alert : IAuditableEntity
 {
