@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.Iam.Application.Internal.OutboundServices;
+namespace Flowbit.Qullqa.Platform.Iam.Application.Internal.OutboundServices;
 
 public interface IHashingService
 {
