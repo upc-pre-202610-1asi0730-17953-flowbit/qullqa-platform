@@ -1,3 +1,3 @@
-namespace Qullqa.Platform.Sales.Domain.Model.Commands;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Commands;
 
 public record CreateCustomerCommand(int BusinessId, string FullName, string DocumentNumber, string PhoneNumber);
