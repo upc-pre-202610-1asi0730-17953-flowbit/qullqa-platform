@@ -1,12 +1,12 @@
-using Qullqa.Platform.Suppliers.Application.CommandServices;
-using Qullqa.Platform.Shared.Application.Model;
-using Qullqa.Platform.Shared.Domain.Repositories;
-using Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
-using Qullqa.Platform.Suppliers.Domain.Model.Commands;
-using Qullqa.Platform.Suppliers.Domain.Model.Enums;
-using Qullqa.Platform.Suppliers.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Suppliers.Application.CommandServices;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Enums;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
 
-namespace Qullqa.Platform.Suppliers.Application.Internal.CommandServices;
+namespace Flowbit.Qullqa.Platform.Suppliers.Application.Internal.CommandServices;
 
 public class PurchaseOrderCommandService(IPurchaseOrderRepository purchaseOrderRepository, IUnitOfWork unitOfWork) : IPurchaseOrderCommandService
 {
