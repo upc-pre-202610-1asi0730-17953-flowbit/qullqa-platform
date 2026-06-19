@@ -1,8 +1,8 @@
-using Qullqa.Platform.Iam.Domain.Model.Aggregates;
-using Qullqa.Platform.Iam.Domain.Model.Commands;
-using Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
 
-namespace Qullqa.Platform.Iam.Application.CommandServices;
+namespace Flowbit.Qullqa.Platform.Iam.Application.CommandServices;
 
 public interface IRoleCommandService
 {
