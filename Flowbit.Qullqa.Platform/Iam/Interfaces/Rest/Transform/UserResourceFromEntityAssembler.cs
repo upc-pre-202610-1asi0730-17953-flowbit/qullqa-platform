@@ -1,7 +1,7 @@
-using Qullqa.Platform.Iam.Domain.Model.Aggregates;
-using Qullqa.Platform.Iam.Interfaces.Rest.Resources;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Iam.Interfaces.Rest.Resources;
 
-namespace Qullqa.Platform.Iam.Interfaces.Rest.Transform;
+namespace Flowbit.Qullqa.Platform.Iam.Interfaces.Rest.Transform;
 
 public static class UserResourceFromEntityAssembler
 {
