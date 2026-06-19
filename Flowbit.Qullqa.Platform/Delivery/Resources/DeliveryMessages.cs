@@ -1,4 +1,4 @@
-﻿namespace Flowbit.Qullqa.Platform.Delivery.Resources;
+namespace Flowbit.Qullqa.Platform.Delivery.Resources;
 
 public class DeliveryMessages
 {
