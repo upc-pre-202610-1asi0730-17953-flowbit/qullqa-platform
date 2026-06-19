@@ -1,7 +1,7 @@
-using Qullqa.Platform.Shared.Domain.Repositories;
-using Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
-namespace Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
 public class UnitOfWork(AppDbContext context) : IUnitOfWork
 {
