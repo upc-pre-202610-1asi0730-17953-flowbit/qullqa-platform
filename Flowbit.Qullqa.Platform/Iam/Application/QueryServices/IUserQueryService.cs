@@ -1,7 +1,7 @@
-using Qullqa.Platform.Iam.Domain.Model.Aggregates;
-using Qullqa.Platform.Iam.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Queries;
 
-namespace Qullqa.Platform.Iam.Application.QueryServices;
+namespace Flowbit.Qullqa.Platform.Iam.Application.QueryServices;
 
 public interface IUserQueryService
 {
