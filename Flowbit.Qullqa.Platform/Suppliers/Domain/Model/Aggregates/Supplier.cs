@@ -1,7 +1,7 @@
-using Qullqa.Platform.Shared.Domain.Model.Entities;
-using Qullqa.Platform.Suppliers.Domain.Model.Enums;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Enums;
 
-namespace Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
 
 public class Supplier : IAuditableEntity
 {
