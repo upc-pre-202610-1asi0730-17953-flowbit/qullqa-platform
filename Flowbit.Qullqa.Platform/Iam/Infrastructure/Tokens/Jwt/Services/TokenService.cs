@@ -3,11 +3,11 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using Qullqa.Platform.Iam.Application.Internal.OutboundServices;
-using Qullqa.Platform.Iam.Domain.Model.Aggregates;
-using Qullqa.Platform.Iam.Infrastructure.Tokens.Jwt.Configuration;
+using Flowbit.Qullqa.Platform.Iam.Application.Internal.OutboundServices;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Iam.Infrastructure.Tokens.Jwt.Configuration;
 
-namespace Qullqa.Platform.Iam.Infrastructure.Tokens.Jwt.Services;
+namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Tokens.Jwt.Services;
 
 public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
 {
