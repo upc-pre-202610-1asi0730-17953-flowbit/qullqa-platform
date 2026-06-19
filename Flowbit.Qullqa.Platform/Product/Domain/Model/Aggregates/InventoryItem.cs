@@ -1,6 +1,6 @@
-using Qullqa.Platform.Shared.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
 
-namespace Qullqa.Platform.Product.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates;
 
 public class InventoryItem : IAuditableEntity
 {
