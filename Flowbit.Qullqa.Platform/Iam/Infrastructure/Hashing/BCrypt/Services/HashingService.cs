@@ -1,7 +1,7 @@
-using Qullqa.Platform.Iam.Application.Internal.OutboundServices;
+using Flowbit.Qullqa.Platform.Iam.Application.Internal.OutboundServices;
 using BCryptNet = BCrypt.Net.BCrypt;
 
-namespace Qullqa.Platform.Iam.Infrastructure.Hashing.BCrypt.Services;
+namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Hashing.BCrypt.Services;
 
 public class HashingService : IHashingService
 {
