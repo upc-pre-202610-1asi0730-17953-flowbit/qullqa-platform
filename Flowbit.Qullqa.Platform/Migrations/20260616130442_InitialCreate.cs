@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace Qullqa.Platform.Migrations
+namespace Flowbit.Qullqa.Platform.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
