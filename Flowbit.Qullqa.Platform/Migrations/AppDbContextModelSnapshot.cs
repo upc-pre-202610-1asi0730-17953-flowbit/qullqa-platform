@@ -3,11 +3,11 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
 #nullable disable
 
-namespace Qullqa.Platform.Migrations
+namespace Flowbit.Qullqa.Platform.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -19,7 +19,7 @@ namespace Qullqa.Platform.Migrations
                 .HasAnnotation("ProductVersion", "10.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Qullqa.Platform.Alerts.Domain.Model.Aggregates.Alert", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Alerts.Domain.Model.Aggregates.Alert", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,7 +107,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("alerts");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Dashboard.Domain.Model.Aggregates.MetricsSnapshot", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Dashboard.Domain.Model.Aggregates.MetricsSnapshot", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,7 +152,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("metrics_snapshots");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Dashboard.Domain.Model.Aggregates.Report", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Dashboard.Domain.Model.Aggregates.Report", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,7 +192,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("reports");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Delivery.Domain.Model.Aggregates.Delivery", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Delivery", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -308,7 +308,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("deliveries");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Delivery.Domain.Model.Aggregates.Waypoint", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Waypoint", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -362,7 +362,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("waypoints");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -417,7 +417,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("businesses");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Iam.Domain.Model.Aggregates.Role", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -450,7 +450,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("roles");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Iam.Domain.Model.Aggregates.User", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -511,7 +511,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("users");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Product.Domain.Model.Aggregates.InventoryItem", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates.InventoryItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -552,7 +552,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("inventory_items");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Product.Domain.Model.Aggregates.Product", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -603,7 +603,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Product.Domain.Model.Aggregates.StockMovement", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates.StockMovement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -645,7 +645,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("stock_movements");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Product.Domain.Model.Aggregates.WarehouseStock", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates.WarehouseStock", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -678,7 +678,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("warehouse_stocks");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Sales.Domain.Model.Aggregates.Customer", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -725,7 +725,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("customers");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Sales.Domain.Model.Aggregates.Sale", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Sale", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -783,7 +783,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("sales");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Sales.Domain.Model.Aggregates.SaleDetail", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.SaleDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -827,7 +827,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("sale_details");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -891,7 +891,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("purchase_orders");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrderDetail", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrderDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -952,7 +952,7 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("purchase_order_details");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Suppliers.Domain.Model.Aggregates.Supplier", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.Supplier", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1037,9 +1037,9 @@ namespace Qullqa.Platform.Migrations
                     b.ToTable("suppliers");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Delivery.Domain.Model.Aggregates.Waypoint", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Waypoint", b =>
                 {
-                    b.HasOne("Qullqa.Platform.Delivery.Domain.Model.Aggregates.Delivery", null)
+                    b.HasOne("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Delivery", null)
                         .WithMany("Waypoints")
                         .HasForeignKey("DeliveryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1047,9 +1047,9 @@ namespace Qullqa.Platform.Migrations
                         .HasConstraintName("f_k_waypoints_deliveries_delivery_id");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Sales.Domain.Model.Aggregates.SaleDetail", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.SaleDetail", b =>
                 {
-                    b.HasOne("Qullqa.Platform.Sales.Domain.Model.Aggregates.Sale", null)
+                    b.HasOne("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Sale", null)
                         .WithMany("Details")
                         .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1057,9 +1057,9 @@ namespace Qullqa.Platform.Migrations
                         .HasConstraintName("f_k_sale_details_sales_sale_id");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrderDetail", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrderDetail", b =>
                 {
-                    b.HasOne("Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", null)
+                    b.HasOne("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", null)
                         .WithMany("Details")
                         .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1067,17 +1067,17 @@ namespace Qullqa.Platform.Migrations
                         .HasConstraintName("f_k_purchase_order_details_purchase_orders_purchase_order_id");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Delivery.Domain.Model.Aggregates.Delivery", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Delivery", b =>
                 {
                     b.Navigation("Waypoints");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Sales.Domain.Model.Aggregates.Sale", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Sale", b =>
                 {
                     b.Navigation("Details");
                 });
 
-            modelBuilder.Entity("Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", b =>
                 {
                     b.Navigation("Details");
                 });
