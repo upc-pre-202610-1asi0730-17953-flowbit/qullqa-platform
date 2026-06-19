@@ -1,7 +1,7 @@
-using Qullqa.Platform.Product.Domain.Model.Aggregates;
-using Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
-namespace Qullqa.Platform.Product.Domain.Repositories;
+namespace Flowbit.Qullqa.Platform.Product.Domain.Repositories;
 
 public interface IInventoryItemRepository : IBaseRepository<InventoryItem>
 {
