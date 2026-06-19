@@ -1,9 +1,9 @@
-using Qullqa.Platform.Alerts.Application.QueryServices;
-using Qullqa.Platform.Alerts.Domain.Model.Aggregates;
-using Qullqa.Platform.Alerts.Domain.Model.Queries;
-using Qullqa.Platform.Alerts.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Alerts.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Alerts.Domain.Repositories;
 
-namespace Qullqa.Platform.Alerts.Application.Internal.QueryServices;
+namespace Flowbit.Qullqa.Platform.Alerts.Application.Internal.QueryServices;
 
 public class AlertQueryService(IAlertRepository alertRepository) : IAlertQueryService
 {
