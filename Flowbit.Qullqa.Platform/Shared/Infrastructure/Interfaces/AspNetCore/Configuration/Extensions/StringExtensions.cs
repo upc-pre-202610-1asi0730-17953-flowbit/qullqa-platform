@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace Qullqa.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration.Extensions;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration.Extensions;
 
 public static partial class StringExtensions
 {
