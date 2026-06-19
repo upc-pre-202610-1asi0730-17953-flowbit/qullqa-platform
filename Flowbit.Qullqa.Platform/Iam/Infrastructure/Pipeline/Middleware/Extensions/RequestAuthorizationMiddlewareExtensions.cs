@@ -1,6 +1,6 @@
-using Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Components;
+using Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Components;
 
-namespace Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Extensions;
+namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Extensions;
 
 public static class RequestAuthorizationMiddlewareExtensions
 {
