@@ -1,3 +1,3 @@
-namespace Qullqa.Platform.Iam.Domain.Model.Queries;
+namespace Flowbit.Qullqa.Platform.Iam.Domain.Model.Queries;
 
 public record GetAllBusinessesQuery();
