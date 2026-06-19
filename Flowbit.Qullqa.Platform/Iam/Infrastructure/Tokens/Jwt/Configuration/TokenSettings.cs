@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.Iam.Infrastructure.Tokens.Jwt.Configuration;
+namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Tokens.Jwt.Configuration;
 
 public class TokenSettings
 {
