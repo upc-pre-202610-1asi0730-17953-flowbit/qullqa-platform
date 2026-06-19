@@ -1,9 +1,9 @@
-using Qullqa.Platform.Sales.Application.QueryServices;
-using Qullqa.Platform.Sales.Domain.Model.Aggregates;
-using Qullqa.Platform.Sales.Domain.Model.Queries;
-using Qullqa.Platform.Sales.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Sales.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Sales.Domain.Repositories;
 
-namespace Qullqa.Platform.Sales.Application.Internal.QueryServices;
+namespace Flowbit.Qullqa.Platform.Sales.Application.Internal.QueryServices;
 
 public class SaleQueryService(ISaleRepository saleRepository) : ISaleQueryService
 {
