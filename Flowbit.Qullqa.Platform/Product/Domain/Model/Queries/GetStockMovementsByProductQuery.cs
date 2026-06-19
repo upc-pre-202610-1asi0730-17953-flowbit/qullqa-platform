@@ -1,3 +1,3 @@
-namespace Qullqa.Platform.Product.Domain.Model.Queries;
+namespace Flowbit.Qullqa.Platform.Product.Domain.Model.Queries;
 
 public record GetStockMovementsByProductQuery(int ProductId, int BusinessId);
