@@ -55,6 +55,7 @@
     <ItemGroup>
       <Folder Include="Delivery\Domain\Model\Errors\" />
       <Folder Include="Delivery\Domain\Model\ValueObjects\" />
+      <Folder Include="Iam\" />
       <Folder Include="Suppliers\Domain\Model\Errors\" />
       <Folder Include="Suppliers\Domain\Model\ValueObjects\" />
     </ItemGroup>

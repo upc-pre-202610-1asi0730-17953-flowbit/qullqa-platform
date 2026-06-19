@@ -1,6 +1,6 @@
-using Qullqa.Platform.Shared.Infrastructure.Pipeline.Middleware.Components;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Pipeline.Middleware.Components;
 
-namespace Qullqa.Platform.Shared.Infrastructure.Pipeline.Middleware.Extensions;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Pipeline.Middleware.Extensions;
 
 public static class MiddlewareExtensions
 {
