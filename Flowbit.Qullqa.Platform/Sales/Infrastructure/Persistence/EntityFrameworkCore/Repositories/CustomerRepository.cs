@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Qullqa.Platform.Sales.Domain.Model.Aggregates;
-using Qullqa.Platform.Sales.Domain.Repositories;
-using Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
-using Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Sales.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
-namespace Qullqa.Platform.Sales.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Flowbit.Qullqa.Platform.Sales.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
 public class CustomerRepository(AppDbContext context) : BaseRepository<Customer>(context), ICustomerRepository
 {
