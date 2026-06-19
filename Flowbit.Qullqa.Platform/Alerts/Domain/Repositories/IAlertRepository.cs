@@ -1,7 +1,7 @@
-using Qullqa.Platform.Alerts.Domain.Model.Aggregates;
-using Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
-namespace Qullqa.Platform.Alerts.Domain.Repositories;
+namespace Flowbit.Qullqa.Platform.Alerts.Domain.Repositories;
 
 public interface IAlertRepository : IBaseRepository<Alert>
 {
