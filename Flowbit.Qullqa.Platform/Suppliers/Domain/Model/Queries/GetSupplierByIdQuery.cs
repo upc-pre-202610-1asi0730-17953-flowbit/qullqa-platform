@@ -1,3 +1,3 @@
-namespace Qullqa.Platform.Suppliers.Domain.Model.Queries;
+namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Queries;
 
 public record GetSupplierByIdQuery(int Id);
