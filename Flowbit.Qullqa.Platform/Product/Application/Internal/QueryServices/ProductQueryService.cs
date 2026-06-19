@@ -1,9 +1,9 @@
-using Qullqa.Platform.Product.Application.QueryServices;
-using Qullqa.Platform.Product.Domain.Model.Aggregates;
-using Qullqa.Platform.Product.Domain.Model.Queries;
-using Qullqa.Platform.Product.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Product.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Product.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Product.Domain.Repositories;
 
-namespace Qullqa.Platform.Product.Application.Internal.QueryServices;
+namespace Flowbit.Qullqa.Platform.Product.Application.Internal.QueryServices;
 
 public class ProductQueryService(
     IProductRepository productRepository,
