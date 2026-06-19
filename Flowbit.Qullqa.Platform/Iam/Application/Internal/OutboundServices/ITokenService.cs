@@ -1,6 +1,6 @@
-using Qullqa.Platform.Iam.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
 
-namespace Qullqa.Platform.Iam.Application.Internal.OutboundServices;
+namespace Flowbit.Qullqa.Platform.Iam.Application.Internal.OutboundServices;
 
 public interface ITokenService
 {
