@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.Iam.Domain.Model;
+namespace Flowbit.Qullqa.Platform.Iam.Domain.Model;
 
 public enum IamError
 {
