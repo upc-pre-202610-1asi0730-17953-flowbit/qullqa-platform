@@ -1,7 +1,7 @@
-using Qullqa.Platform.Alerts.Domain.Model.Aggregates;
-using Qullqa.Platform.Alerts.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Queries;
 
-namespace Qullqa.Platform.Alerts.Application.QueryServices;
+namespace Flowbit.Qullqa.Platform.Alerts.Application.QueryServices;
 
 public interface IAlertQueryService
 {
