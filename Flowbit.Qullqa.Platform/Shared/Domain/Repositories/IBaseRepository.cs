@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.Shared.Domain.Repositories;
+namespace Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
 public interface IBaseRepository<TEntity>
 {
