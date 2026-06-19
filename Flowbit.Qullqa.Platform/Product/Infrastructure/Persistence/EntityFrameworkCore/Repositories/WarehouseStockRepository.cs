@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Qullqa.Platform.Product.Domain.Model.Aggregates;
-using Qullqa.Platform.Product.Domain.Repositories;
-using Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
-using Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Product.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
-namespace Qullqa.Platform.Product.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Flowbit.Qullqa.Platform.Product.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
 public class WarehouseStockRepository(AppDbContext context) : BaseRepository<WarehouseStock>(context), IWarehouseStockRepository
 {
