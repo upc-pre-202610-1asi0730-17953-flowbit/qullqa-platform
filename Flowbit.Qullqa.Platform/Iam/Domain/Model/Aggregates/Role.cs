@@ -1,6 +1,6 @@
-using Qullqa.Platform.Shared.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
 
-namespace Qullqa.Platform.Iam.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
 
 public class Role : IAuditableEntity
 {
