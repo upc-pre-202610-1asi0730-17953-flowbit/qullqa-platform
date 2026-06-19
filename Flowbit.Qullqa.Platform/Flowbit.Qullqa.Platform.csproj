@@ -42,6 +42,19 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>CommonMessages.es.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Update="Suppliers\Resources\SuppliersMessages.es.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SuppliersMessages.es.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Suppliers\Resources\SuppliersMessages.en.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>SuppliersMessages.en.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Suppliers\Domain\Model\Errors\" />
+      <Folder Include="Suppliers\Domain\Model\ValueObjects\" />
     </ItemGroup>
 
 </Project>
