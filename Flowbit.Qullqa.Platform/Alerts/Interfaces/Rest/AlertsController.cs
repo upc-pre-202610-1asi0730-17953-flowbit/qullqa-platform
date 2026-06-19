@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
-using Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
-using Qullqa.Platform.Alerts.Application.CommandServices;
-using Qullqa.Platform.Alerts.Application.QueryServices;
-using Qullqa.Platform.Alerts.Domain.Model.Commands;
-using Qullqa.Platform.Alerts.Domain.Model.Queries;
-using Qullqa.Platform.Alerts.Interfaces.Rest.Resources;
-using Qullqa.Platform.Alerts.Interfaces.Rest.Transform;
+using Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
+using Flowbit.Qullqa.Platform.Alerts.Application.CommandServices;
+using Flowbit.Qullqa.Platform.Alerts.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Alerts.Interfaces.Rest.Resources;
+using Flowbit.Qullqa.Platform.Alerts.Interfaces.Rest.Transform;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Qullqa.Platform.Alerts.Interfaces.Rest;
+namespace Flowbit.Qullqa.Platform.Alerts.Interfaces.Rest;
 
 [Authorize]
 [ApiController]
