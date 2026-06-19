@@ -1,7 +1,7 @@
-using Qullqa.Platform.Sales.Domain.Model.Enums;
-using Qullqa.Platform.Shared.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Enums;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
 
-namespace Qullqa.Platform.Sales.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
 
 public class Sale : IAuditableEntity
 {
