@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Qullqa.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration.Extensions;
 
-namespace Qullqa.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Interfaces.AspNetCore.Configuration;
 
 public class KebabCaseRouteNamingConvention : IControllerModelConvention
 {
