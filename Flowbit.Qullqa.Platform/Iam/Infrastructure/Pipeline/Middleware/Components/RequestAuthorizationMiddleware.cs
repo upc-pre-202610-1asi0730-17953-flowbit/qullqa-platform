@@ -1,9 +1,9 @@
-using Qullqa.Platform.Iam.Application.Internal.OutboundServices;
-using Qullqa.Platform.Iam.Application.QueryServices;
-using Qullqa.Platform.Iam.Domain.Model.Queries;
-using Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
+using Flowbit.Qullqa.Platform.Iam.Application.Internal.OutboundServices;
+using Flowbit.Qullqa.Platform.Iam.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 
-namespace Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Components;
+namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Components;
 
 public class RequestAuthorizationMiddleware(RequestDelegate next)
 {
