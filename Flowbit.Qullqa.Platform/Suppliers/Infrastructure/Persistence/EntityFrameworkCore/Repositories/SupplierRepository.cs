@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
-using Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
-using Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
-using Qullqa.Platform.Suppliers.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
 
-namespace Qullqa.Platform.Suppliers.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Flowbit.Qullqa.Platform.Suppliers.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
 public class SupplierRepository(AppDbContext context) : BaseRepository<Supplier>(context), ISupplierRepository
 {
