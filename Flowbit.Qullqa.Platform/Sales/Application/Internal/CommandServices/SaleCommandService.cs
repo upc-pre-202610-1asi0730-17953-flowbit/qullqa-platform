@@ -1,12 +1,12 @@
-using Qullqa.Platform.Sales.Domain.Model.Aggregates;
-using Qullqa.Platform.Sales.Domain.Model.Commands;
-using Qullqa.Platform.Sales.Domain.Model.Enums;
-using Qullqa.Platform.Sales.Domain.Repositories;
-using Qullqa.Platform.Shared.Application.Model;
-using Qullqa.Platform.Sales.Application.CommandServices;
-using Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Enums;
+using Flowbit.Qullqa.Platform.Sales.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Sales.Application.CommandServices;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
-namespace Qullqa.Platform.Sales.Application.Internal.CommandServices;
+namespace Flowbit.Qullqa.Platform.Sales.Application.Internal.CommandServices;
 
 public class SaleCommandService(ISaleRepository saleRepository, ISaleDetailRepository saleDetailRepository, IUnitOfWork unitOfWork) : ISaleCommandService
 {
