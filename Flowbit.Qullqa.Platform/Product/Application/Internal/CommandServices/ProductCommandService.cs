@@ -1,12 +1,12 @@
-using Qullqa.Platform.Product.Application.CommandServices;
-using Qullqa.Platform.Product.Domain.Model;
-using Qullqa.Platform.Product.Domain.Model.Aggregates;
-using Qullqa.Platform.Product.Domain.Model.Commands;
-using Qullqa.Platform.Product.Domain.Repositories;
-using Qullqa.Platform.Shared.Application.Model;
-using Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Product.Application.CommandServices;
+using Flowbit.Qullqa.Platform.Product.Domain.Model;
+using Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Product.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Product.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
-namespace Qullqa.Platform.Product.Application.Internal.CommandServices;
+namespace Flowbit.Qullqa.Platform.Product.Application.Internal.CommandServices;
 
 public class ProductCommandService(
     IProductRepository productRepository,
