@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using Qullqa.Platform.Iam.Application.CommandServices;
-using Qullqa.Platform.Iam.Application.Internal.OutboundServices;
-using Qullqa.Platform.Iam.Domain.Model;
-using Qullqa.Platform.Iam.Domain.Model.Aggregates;
-using Qullqa.Platform.Iam.Domain.Model.Commands;
-using Qullqa.Platform.Iam.Domain.Repositories;
-using Qullqa.Platform.Shared.Application.Model;
-using Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Iam.Application.CommandServices;
+using Flowbit.Qullqa.Platform.Iam.Application.Internal.OutboundServices;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Iam.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
-namespace Qullqa.Platform.Iam.Application.Internal.CommandServices;
+namespace Flowbit.Qullqa.Platform.Iam.Application.Internal.CommandServices;
 
 public class UserCommandService(
     IUserRepository userRepository,
