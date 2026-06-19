@@ -1,6 +1,6 @@
-using Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
-namespace Qullqa.Platform.Product.Domain.Repositories;
+namespace Flowbit.Qullqa.Platform.Product.Domain.Repositories;
 
 public interface IProductRepository : IBaseRepository<Model.Aggregates.Product>
 {
