@@ -1,6 +1,6 @@
-﻿namespace Flowbit.Qullqa.Platform.Suppliers.Domain;
+﻿namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model;
 
-public class SuppliersError
+public enum SuppliersError
 {
-    
+    None, SupplierNotFound, PurchaseOrderNotFound, RucAlreadyTaken, DatabaseError, InternalServerError
 }
