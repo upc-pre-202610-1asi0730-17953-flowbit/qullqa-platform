@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Products.Domain.Model.Commands;
+namespace Flowbit.Qullqa.Platform.Products.Domain.Model.Commands;
 
 /// <summary>
 ///     Decrements inventory after a confirmed sale. Not exposed as its own
