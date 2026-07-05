@@ -1,9 +1,9 @@
-using Qullqa.Platform.v2.Subscription.Application.QueryServices;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Queries;
-using Qullqa.Platform.v2.Subscription.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Subscription.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Repositories;
 
-namespace Qullqa.Platform.v2.Subscription.Application.Internal.QueryServices;
+namespace Flowbit.Qullqa.Platform.Subscription.Application.Internal.QueryServices;
 
 public class PlanQueryService(IPlanRepository planRepository) : IPlanQueryService
 {
