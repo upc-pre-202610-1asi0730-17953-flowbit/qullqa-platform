@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Sales.Interfaces.Acl;
+namespace Flowbit.Qullqa.Platform.Sales.Interfaces.Acl;
 
 /// <summary>
 ///     The only way another bounded context may reach into Sales &amp; POS
