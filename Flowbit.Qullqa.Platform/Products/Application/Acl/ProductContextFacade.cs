@@ -1,13 +1,13 @@
-using Qullqa.Platform.v2.Products.Application.CommandServices;
-using Qullqa.Platform.v2.Products.Application.QueryServices;
-using Qullqa.Platform.v2.Products.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Products.Domain.Model.Commands;
-using Qullqa.Platform.v2.Products.Domain.Model.Entities;
-using Qullqa.Platform.v2.Products.Domain.Model.Queries;
-using Qullqa.Platform.v2.Products.Domain.Repositories;
-using Qullqa.Platform.v2.Products.Interfaces.Acl;
+using Flowbit.Qullqa.Platform.Products.Application.CommandServices;
+using Flowbit.Qullqa.Platform.Products.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Products.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Products.Interfaces.Acl;
 
-namespace Qullqa.Platform.v2.Products.Application.Acl;
+namespace Flowbit.Qullqa.Platform.Products.Application.Acl;
 
 public class ProductContextFacade(
     IWarehouseCommandService warehouseCommandService,
