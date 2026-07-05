@@ -1,6 +1,6 @@
-using Qullqa.Platform.v2.Shared.Domain.Model.Services;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Services;
 
-namespace Qullqa.Platform.v2.Products.Domain.Model.Entities;
+namespace Flowbit.Qullqa.Platform.Products.Domain.Model.Entities;
 
 public static class BatchStatus
 {
