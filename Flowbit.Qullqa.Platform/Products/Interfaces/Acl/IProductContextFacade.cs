@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Products.Interfaces.Acl;
+namespace Flowbit.Qullqa.Platform.Products.Interfaces.Acl;
 
 /// <summary>
 ///     The only way another bounded context may reach into Product &amp;
