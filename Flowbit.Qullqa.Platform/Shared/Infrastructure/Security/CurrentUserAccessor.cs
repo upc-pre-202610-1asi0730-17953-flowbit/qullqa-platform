@@ -1,8 +1,8 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Qullqa.Platform.v2.Shared.Application;
+using Flowbit.Qullqa.Platform.Shared.Application;
 
-namespace Qullqa.Platform.v2.Shared.Infrastructure.Security;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Security;
 
 /// <summary>
 ///     Reads the current user/business/role from HttpContext.User claims set
