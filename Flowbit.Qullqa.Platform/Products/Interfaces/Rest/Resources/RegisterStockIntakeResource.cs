@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Products.Interfaces.Rest.Resources;
+namespace Flowbit.Qullqa.Platform.Products.Interfaces.Rest.Resources;
 
 /// <summary>ProductId is deliberately not part of this resource — it comes from the route (/products/{id}/stock-intake).</summary>
 public record RegisterStockIntakeResource(
