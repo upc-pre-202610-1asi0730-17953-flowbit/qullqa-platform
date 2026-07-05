@@ -1,8 +1,8 @@
-using Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Sales.Domain.Model.Commands;
-using Qullqa.Platform.v2.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
 
-namespace Qullqa.Platform.v2.Sales.Application.CommandServices;
+namespace Flowbit.Qullqa.Platform.Sales.Application.CommandServices;
 
 public interface ISaleCommandService
 {
