@@ -1,72 +1,113 @@
-using Flowbit.Qullqa.Platform.Suppliers.Application.CommandServices;
-using Flowbit.Qullqa.Platform.Shared.Application.Model;
-using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Commands;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Enums;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
+using Cortex.Mediator;
+using Microsoft.Extensions.Localization;
+using Qullqa.Platform.v2.Products.Interfaces.Acl;
+using Qullqa.Platform.v2.Shared.Application.Model;
+using Qullqa.Platform.v2.Shared.Domain.Repositories;
+using Qullqa.Platform.v2.Suppliers.Application.CommandServices;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Commands;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Errors;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Events;
+using Qullqa.Platform.v2.Suppliers.Domain.Repositories;
+using Qullqa.Platform.v2.Suppliers.Resources;
 
-namespace Flowbit.Qullqa.Platform.Suppliers.Application.Internal.CommandServices;
+namespace Qullqa.Platform.v2.Suppliers.Application.Internal.CommandServices;
 
-public class PurchaseOrderCommandService(IPurchaseOrderRepository purchaseOrderRepository, IUnitOfWork unitOfWork) : IPurchaseOrderCommandService
+public class PurchaseOrderCommandService(
+    IPurchaseOrderRepository purchaseOrderRepository,
+    ISupplierRepository supplierRepository,
+    IProductContextFacade productContextFacade,
+    IUnitOfWork unitOfWork,
+    IMediator mediator,
+    IStringLocalizer<SuppliersMessages> localizer)
+    : IPurchaseOrderCommandService
 {
     public async Task<Result<PurchaseOrder>> Handle(CreatePurchaseOrderCommand command, CancellationToken cancellationToken)
     {
-        try
-        {
-            var order = new PurchaseOrder(command.BusinessId, command.SupplierId, command.SupplierName,
-                command.ExpectedDate, command.Description, command.Currency);
-            await purchaseOrderRepository.AddAsync(order, cancellationToken);
-            await unitOfWork.CompleteAsync(cancellationToken);
-            return Result<PurchaseOrder>.Success(order);
-        }
-        catch (Exception ex)
-        {
-            return Result<PurchaseOrder>.Failure(ex.Message);
-        }
+        if (command.Lines.Count == 0)
+            return Result<PurchaseOrder>.Failure(SuppliersError.EmptyPurchaseOrderLines,
+                localizer[nameof(SuppliersError.EmptyPurchaseOrderLines)]);
+
+        var supplier = await supplierRepository.FindByIdAsync(command.SupplierId, cancellationToken);
+        if (supplier == null)
+            return Result<PurchaseOrder>.Failure(SuppliersError.SupplierNotFound, localizer[nameof(SuppliersError.SupplierNotFound)]);
+
+        var purchaseOrder = new PurchaseOrder(command.BusinessId, command.SupplierId, command.Date, command.ExpectedDate,
+            command.Currency, command.Description);
+        foreach (var line in command.Lines)
+            purchaseOrder.AddLine(line.ProductId, line.Quantity, line.UnitPrice, line.Discount);
+
+        await purchaseOrderRepository.AddAsync(purchaseOrder, cancellationToken);
+        await unitOfWork.CompleteAsync(cancellationToken);
+        return Result<PurchaseOrder>.Success(purchaseOrder);
     }
 
-    public async Task<Result<PurchaseOrder>> Handle(AddPurchaseOrderDetailCommand command, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var order = await purchaseOrderRepository.FindByIdWithDetailsAsync(command.PurchaseOrderId, cancellationToken);
-            if (order is null) return Result<PurchaseOrder>.Failure("Purchase order not found");
-
-            var detail = new PurchaseOrderDetail(command.PurchaseOrderId, command.ProductId, command.ProductName,
-                command.Quantity, command.UnitPrice, command.Discount);
-            order.Details.Add(detail);
-            purchaseOrderRepository.Update(order);
-            await unitOfWork.CompleteAsync(cancellationToken);
-            return Result<PurchaseOrder>.Success(order);
-        }
-        catch (Exception ex)
-        {
-            return Result<PurchaseOrder>.Failure(ex.Message);
-        }
-    }
-
+    /// <summary>
+    ///     Moving to RECEIVED triggers a real stock intake per line, tagged
+    ///     with the supplier + a note referencing the order — distinct from a
+    ///     manual inventory intake (see architecture doc §6.6). Wrapped in one
+    ///     transaction so the status change and every line's stock intake
+    ///     succeed or fail together.
+    /// </summary>
     public async Task<Result<PurchaseOrder>> Handle(UpdatePurchaseOrderStatusCommand command, CancellationToken cancellationToken)
     {
+        var purchaseOrder = await purchaseOrderRepository.FindByIdWithDetailsAsync(command.PurchaseOrderId, cancellationToken);
+        if (purchaseOrder == null)
+            return Result<PurchaseOrder>.Failure(SuppliersError.PurchaseOrderNotFound,
+                localizer[nameof(SuppliersError.PurchaseOrderNotFound)]);
+
+        switch (command.Status)
+        {
+            case PurchaseOrderStatus.Received:
+                return await MarkReceived(purchaseOrder, cancellationToken);
+            case PurchaseOrderStatus.Delayed:
+                purchaseOrder.MarkDelayed();
+                break;
+            case PurchaseOrderStatus.Cancelled:
+                purchaseOrder.Cancel();
+                break;
+            default:
+                return Result<PurchaseOrder>.Failure(SuppliersError.InvalidStatusTransition,
+                    localizer[nameof(SuppliersError.InvalidStatusTransition)]);
+        }
+
+        purchaseOrderRepository.Update(purchaseOrder);
+        await unitOfWork.CompleteAsync(cancellationToken);
+        return Result<PurchaseOrder>.Success(purchaseOrder);
+    }
+
+    private async Task<Result<PurchaseOrder>> MarkReceived(PurchaseOrder purchaseOrder, CancellationToken cancellationToken)
+    {
+        var supplier = await supplierRepository.FindByIdAsync(purchaseOrder.SupplierId, cancellationToken);
+        var supplierName = supplier != null ? $"{supplier.Name} {supplier.LastName}".Trim() : string.Empty;
+
+        await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
         try
         {
-            var order = await purchaseOrderRepository.FindByIdAsync(command.Id, cancellationToken);
-            if (order is null) return Result<PurchaseOrder>.Failure("Purchase order not found");
+            purchaseOrder.MarkReceived(DateOnly.FromDateTime(DateTime.UtcNow));
+            purchaseOrderRepository.Update(purchaseOrder);
+            await unitOfWork.CompleteAsync(cancellationToken);
 
-            switch (command.Status)
+            foreach (var line in purchaseOrder.Details)
             {
-                case PurchaseOrderStatus.Received: order.Receive(); break;
-                case PurchaseOrderStatus.Delayed: order.MarkDelayed(); break;
-                case PurchaseOrderStatus.Cancelled: order.Cancel(); break;
+                var note = $"Orden de compra #{purchaseOrder.Id}";
+                await productContextFacade.RegisterStockIntake(line.ProductId, purchaseOrder.BusinessId, line.Quantity,
+                    line.UnitPrice, supplierName, note, cancellationToken);
             }
 
-            purchaseOrderRepository.Update(order);
-            await unitOfWork.CompleteAsync(cancellationToken);
-            return Result<PurchaseOrder>.Success(order);
+            await transaction.CommitAsync(cancellationToken);
+
+            var lines = purchaseOrder.Details.Select(detail => (detail.ProductId, detail.Quantity)).ToList();
+            await mediator.PublishAsync(
+                new PurchaseOrderReceivedEvent(purchaseOrder.Id, purchaseOrder.BusinessId, supplierName, lines),
+                cancellationToken);
+
+            return Result<PurchaseOrder>.Success(purchaseOrder);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            return Result<PurchaseOrder>.Failure(ex.Message);
+            await transaction.RollbackAsync(cancellationToken);
+            return Result<PurchaseOrder>.Failure(SuppliersError.DatabaseError, localizer[nameof(SuppliersError.DatabaseError)]);
         }
     }
 }

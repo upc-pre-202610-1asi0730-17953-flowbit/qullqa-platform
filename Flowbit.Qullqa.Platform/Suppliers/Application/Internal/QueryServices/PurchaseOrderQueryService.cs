@@ -1,15 +1,26 @@
-using Flowbit.Qullqa.Platform.Suppliers.Application.QueryServices;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Queries;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
+using Qullqa.Platform.v2.Suppliers.Application.QueryServices;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Queries;
+using Qullqa.Platform.v2.Suppliers.Domain.Repositories;
 
-namespace Flowbit.Qullqa.Platform.Suppliers.Application.Internal.QueryServices;
+namespace Qullqa.Platform.v2.Suppliers.Application.Internal.QueryServices;
 
 public class PurchaseOrderQueryService(IPurchaseOrderRepository purchaseOrderRepository) : IPurchaseOrderQueryService
 {
-    public async Task<PurchaseOrder?> Handle(GetPurchaseOrderByIdQuery query, CancellationToken cancellationToken)
-        => await purchaseOrderRepository.FindByIdWithDetailsAsync(query.Id, cancellationToken);
+    public async Task<IEnumerable<PurchaseOrder>> Handle(GetAllPurchaseOrdersByBusinessIdQuery query,
+        CancellationToken cancellationToken)
+    {
+        return await purchaseOrderRepository.FindAllByBusinessIdAsync(query.BusinessId, cancellationToken);
+    }
 
-    public async Task<IEnumerable<PurchaseOrder>> Handle(GetPurchaseOrdersByBusinessQuery query, CancellationToken cancellationToken)
-        => await purchaseOrderRepository.FindByBusinessIdAsync(query.BusinessId, cancellationToken);
+    public async Task<IEnumerable<PurchaseOrder>> Handle(GetPurchaseOrdersBySupplierIdQuery query,
+        CancellationToken cancellationToken)
+    {
+        return await purchaseOrderRepository.FindAllBySupplierIdAsync(query.SupplierId, cancellationToken);
+    }
+
+    public async Task<PurchaseOrder?> Handle(GetPurchaseOrderByIdQuery query, CancellationToken cancellationToken)
+    {
+        return await purchaseOrderRepository.FindByIdWithDetailsAsync(query.PurchaseOrderId, cancellationToken);
+    }
 }

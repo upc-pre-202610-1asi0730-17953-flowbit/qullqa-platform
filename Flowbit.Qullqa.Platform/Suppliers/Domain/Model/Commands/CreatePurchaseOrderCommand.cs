@@ -1,4 +1,10 @@
-namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Commands;
+namespace Qullqa.Platform.v2.Suppliers.Domain.Model.Commands;
 
-public record CreatePurchaseOrderCommand(int BusinessId, int SupplierId, string SupplierName,
-    DateTimeOffset? ExpectedDate, string Description, string Currency);
+public record CreatePurchaseOrderCommand(
+    int BusinessId,
+    int SupplierId,
+    DateOnly Date,
+    DateOnly? ExpectedDate,
+    string Currency,
+    string Description,
+    IReadOnlyCollection<PurchaseOrderLineCommand> Lines);

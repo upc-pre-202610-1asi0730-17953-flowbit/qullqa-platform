@@ -1,3 +1,3 @@
-namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Queries;
+namespace Qullqa.Platform.v2.Suppliers.Domain.Model.Queries;
 
-public record GetPurchaseOrderByIdQuery(int Id);
+public record GetPurchaseOrderByIdQuery(int PurchaseOrderId);

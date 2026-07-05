@@ -1,5 +1,3 @@
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Enums;
+namespace Qullqa.Platform.v2.Suppliers.Interfaces.Rest.Resources;
 
-namespace Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest.Resources;
-
-public record UpdatePurchaseOrderStatusResource(PurchaseOrderStatus Status);
+public record UpdatePurchaseOrderStatusResource(string Status);

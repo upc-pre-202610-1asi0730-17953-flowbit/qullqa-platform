@@ -1,6 +1,11 @@
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Enums;
+namespace Qullqa.Platform.v2.Suppliers.Interfaces.Rest.Resources;
 
-namespace Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest.Resources;
-
-public record CreateSupplierResource(int BusinessId, string Name, string LastName, string Ruc, string Email,
-    string Phone, string Address, string ContactPerson, SupplierCategory Category);
+public record CreateSupplierResource(
+    string Name,
+    string LastName,
+    string Ruc,
+    string Email,
+    string Phone,
+    string Address,
+    string ContactPerson,
+    string Category);

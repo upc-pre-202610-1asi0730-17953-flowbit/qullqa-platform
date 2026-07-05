@@ -1,56 +1,88 @@
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
-using Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
-using Flowbit.Qullqa.Platform.Suppliers.Application.CommandServices;
-using Flowbit.Qullqa.Platform.Suppliers.Application.QueryServices;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Commands;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Queries;
-using Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest.Resources;
-using Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest.Transform;
+using Qullqa.Platform.v2.Iam.Infrastructure.Pipeline.Middleware.Attributes;
+using Qullqa.Platform.v2.Shared.Application;
+using Qullqa.Platform.v2.Shared.Interfaces.Rest.ProblemDetails;
+using Qullqa.Platform.v2.Suppliers.Application.CommandServices;
+using Qullqa.Platform.v2.Suppliers.Application.QueryServices;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Commands;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Queries;
+using Qullqa.Platform.v2.Suppliers.Interfaces.Rest.Resources;
+using Qullqa.Platform.v2.Suppliers.Interfaces.Rest.Transform;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest;
+namespace Qullqa.Platform.v2.Suppliers.Interfaces.Rest;
 
 [Authorize]
 [ApiController]
-[Route("api/v1/[controller]")]
-[SwaggerTag("Supplier management")]
-public class SuppliersController(ISupplierCommandService supplierCommandService, ISupplierQueryService supplierQueryService) : ControllerBase
+[Route("api/v1/suppliers")]
+[Produces(MediaTypeNames.Application.Json)]
+[SwaggerTag("Suppliers of a business")]
+public class SuppliersController(
+    ISupplierCommandService supplierCommandService,
+    ISupplierQueryService supplierQueryService,
+    ICurrentUserAccessor currentUserAccessor,
+    ProblemDetailsFactory problemDetailsFactory)
+    : ControllerBase
 {
-    [HttpGet("business/{businessId:int}")]
-    [SwaggerOperation("Get suppliers by business")]
-    public async Task<IActionResult> GetByBusiness(int businessId, CancellationToken cancellationToken)
+    [HttpGet]
+    [SwaggerOperation(Summary = "List suppliers of the current business", OperationId = "GetSuppliers")]
+    public async Task<IActionResult> GetSuppliers(CancellationToken cancellationToken)
     {
-        var suppliers = await supplierQueryService.Handle(new GetSuppliersByBusinessQuery(businessId), cancellationToken);
+        var businessId = currentUserAccessor.CurrentBusinessId;
+        if (businessId == null) return Unauthorized();
+
+        var suppliers = await supplierQueryService.Handle(new GetAllSuppliersByBusinessIdQuery(businessId.Value), cancellationToken);
         return Ok(suppliers.Select(SupplierResourceFromEntityAssembler.ToResourceFromEntity));
     }
 
     [HttpGet("{id:int}")]
-    [SwaggerOperation("Get supplier by id")]
-    public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
+    [SwaggerOperation(Summary = "Get a supplier by id", OperationId = "GetSupplierById")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "The supplier was not found")]
+    public async Task<IActionResult> GetSupplierById([FromRoute] int id, CancellationToken cancellationToken)
     {
         var supplier = await supplierQueryService.Handle(new GetSupplierByIdQuery(id), cancellationToken);
-        return supplier is null ? NotFound() : Ok(SupplierResourceFromEntityAssembler.ToResourceFromEntity(supplier));
+        if (supplier == null || supplier.BusinessId != currentUserAccessor.CurrentBusinessId) return NotFound();
+
+        return Ok(SupplierResourceFromEntityAssembler.ToResourceFromEntity(supplier));
     }
 
     [HttpPost]
-    [SwaggerOperation("Create supplier")]
-    public async Task<IActionResult> Create([FromBody] CreateSupplierResource resource, CancellationToken cancellationToken)
+    [SwaggerOperation(Summary = "Create a supplier", OperationId = "CreateSupplier")]
+    public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierResource resource, CancellationToken cancellationToken)
     {
-        var result = await supplierCommandService.Handle(
-            new CreateSupplierCommand(resource.BusinessId, resource.Name, resource.LastName, resource.Ruc,
-                resource.Email, resource.Phone, resource.Address, resource.ContactPerson, resource.Category),
-            cancellationToken);
-        return result.IsFailure ? BadRequest(result.Message) : CreatedAtAction(nameof(GetById), new { id = result.Value!.Id }, SupplierResourceFromEntityAssembler.ToResourceFromEntity(result.Value));
+        var businessId = currentUserAccessor.CurrentBusinessId;
+        if (businessId == null) return Unauthorized();
+
+        var command = CreateSupplierCommandFromResourceAssembler.ToCommandFromResource(resource, businessId.Value);
+        var result = await supplierCommandService.Handle(command, cancellationToken);
+
+        return SuppliersActionResultAssembler.ToActionResult(result, problemDetailsFactory,
+            supplier => CreatedAtAction(nameof(GetSupplierById), new { id = supplier.Id },
+                SupplierResourceFromEntityAssembler.ToResourceFromEntity(supplier)));
     }
 
-    [HttpPut("{id:int}")]
-    [SwaggerOperation("Update supplier")]
-    public async Task<IActionResult> Update(int id, [FromBody] UpdateSupplierResource resource, CancellationToken cancellationToken)
+    /// <summary>A plain field update. Use DELETE to deactivate (soft-delete) instead — see below.</summary>
+    [HttpPatch("{id:int}")]
+    [SwaggerOperation(Summary = "Update a supplier", OperationId = "UpdateSupplier")]
+    public async Task<IActionResult> UpdateSupplier([FromRoute] int id, [FromBody] UpdateSupplierResource resource,
+        CancellationToken cancellationToken)
     {
-        var result = await supplierCommandService.Handle(
-            new UpdateSupplierCommand(id, resource.Name, resource.LastName, resource.Email, resource.Phone,
-                resource.Address, resource.ContactPerson, resource.Category),
-            cancellationToken);
-        return result.IsFailure ? BadRequest(result.Message) : Ok(SupplierResourceFromEntityAssembler.ToResourceFromEntity(result.Value!));
+        var command = UpdateSupplierCommandFromResourceAssembler.ToCommandFromResource(resource, id);
+        var result = await supplierCommandService.Handle(command, cancellationToken);
+
+        return SuppliersActionResultAssembler.ToActionResult(result, problemDetailsFactory,
+            supplier => Ok(SupplierResourceFromEntityAssembler.ToResourceFromEntity(supplier)));
+    }
+
+    /// <summary>Soft-delete: flips Status to INACTIVE rather than removing the row (see architecture doc §6.6).</summary>
+    [HttpDelete("{id:int}")]
+    [SwaggerOperation(Summary = "Deactivate a supplier", OperationId = "DeactivateSupplier")]
+    public async Task<IActionResult> DeactivateSupplier([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var result = await supplierCommandService.Handle(new DeactivateSupplierCommand(id), cancellationToken);
+
+        return SuppliersActionResultAssembler.ToActionResult(result, problemDetailsFactory,
+            supplier => Ok(SupplierResourceFromEntityAssembler.ToResourceFromEntity(supplier)));
     }
 }

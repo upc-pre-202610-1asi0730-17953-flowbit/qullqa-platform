@@ -1,10 +1,9 @@
-using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Shared.Domain.Repositories;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
 
-namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
+namespace Qullqa.Platform.v2.Suppliers.Domain.Repositories;
 
 public interface ISupplierRepository : IBaseRepository<Supplier>
 {
-    Task<IEnumerable<Supplier>> FindByBusinessIdAsync(int businessId, CancellationToken cancellationToken);
-    Task<bool> ExistsByRucAsync(string ruc, CancellationToken cancellationToken);
+    Task<IEnumerable<Supplier>> FindAllByBusinessIdAsync(int businessId, CancellationToken cancellationToken = default);
 }

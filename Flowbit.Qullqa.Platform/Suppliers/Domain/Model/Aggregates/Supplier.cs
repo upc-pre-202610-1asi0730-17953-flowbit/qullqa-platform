@@ -1,31 +1,51 @@
-using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Enums;
+namespace Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
 
-namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
-
-public class Supplier : IAuditableEntity
+public static class SupplierStatus
 {
-    public int Id { get; private set; }
-    public int BusinessId { get; private set; }
-    public string Name { get; private set; } = string.Empty;
-    public string LastName { get; private set; } = string.Empty;
-    public string Ruc { get; private set; } = string.Empty;
-    public string Email { get; private set; } = string.Empty;
-    public string Phone { get; private set; } = string.Empty;
-    public string Address { get; private set; } = string.Empty;
-    public string ContactPerson { get; private set; } = string.Empty;
-    public SupplierCategory Category { get; private set; }
-    public SupplierStatus Status { get; private set; } = SupplierStatus.Active;
-    public DateTimeOffset Since { get; private set; }
-    public DateTimeOffset? CreatedAt { get; private set; }
-    public DateTimeOffset? UpdatedAt { get; private set; }
+    public const string Active = "ACTIVE";
+    public const string Inactive = "INACTIVE";
+}
 
-    protected Supplier() { }
-
-    public Supplier(int businessId, string name, string lastName, string ruc, string email, string phone,
-        string address, string contactPerson, SupplierCategory category)
+/// <summary>
+///     A supplier is classified by the same Shared.ProductCategory vocabulary
+///     Product uses (a supplier supplies a kind of product) — there is
+///     deliberately no separate SupplierCategory enum (see architecture doc
+///     §6.6: the frontend's original SupplierCategory was removed in favor
+///     of this unification).
+/// </summary>
+public class Supplier(
+    int businessId,
+    string name,
+    string lastName,
+    string ruc,
+    string email,
+    string phone,
+    string address,
+    string contactPerson,
+    string category,
+    DateOnly since)
+{
+    public Supplier() : this(0, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty,
+        string.Empty, string.Empty, DateOnly.FromDateTime(DateTime.UtcNow))
     {
-        BusinessId = businessId;
+    }
+
+    public int Id { get; }
+    public int BusinessId { get; private set; } = businessId;
+    public string Name { get; private set; } = name;
+    public string LastName { get; private set; } = lastName;
+    public string Ruc { get; private set; } = ruc;
+    public string Email { get; private set; } = email;
+    public string Phone { get; private set; } = phone;
+    public string Address { get; private set; } = address;
+    public string ContactPerson { get; private set; } = contactPerson;
+    public string Category { get; private set; } = category;
+    public string Status { get; private set; } = SupplierStatus.Active;
+    public DateOnly Since { get; private set; } = since;
+
+    public Supplier UpdateDetails(string name, string lastName, string ruc, string email, string phone, string address,
+        string contactPerson, string category)
+    {
         Name = name;
         LastName = lastName;
         Ruc = ruc;
@@ -34,20 +54,12 @@ public class Supplier : IAuditableEntity
         Address = address;
         ContactPerson = contactPerson;
         Category = category;
-        Since = DateTimeOffset.UtcNow;
+        return this;
     }
 
-    public void Update(string name, string lastName, string email, string phone, string address, string contactPerson, SupplierCategory category)
+    public Supplier Deactivate()
     {
-        Name = name;
-        LastName = lastName;
-        Email = email;
-        Phone = phone;
-        Address = address;
-        ContactPerson = contactPerson;
-        Category = category;
+        Status = SupplierStatus.Inactive;
+        return this;
     }
-
-    public void Deactivate() => Status = SupplierStatus.Inactive;
-    public void Activate() => Status = SupplierStatus.Active;
 }

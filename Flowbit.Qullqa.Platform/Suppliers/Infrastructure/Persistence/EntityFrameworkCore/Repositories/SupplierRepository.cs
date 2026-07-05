@@ -1,16 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
-using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
+using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Suppliers.Domain.Repositories;
 
-namespace Flowbit.Qullqa.Platform.Suppliers.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Qullqa.Platform.v2.Suppliers.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
 public class SupplierRepository(AppDbContext context) : BaseRepository<Supplier>(context), ISupplierRepository
 {
-    public async Task<IEnumerable<Supplier>> FindByBusinessIdAsync(int businessId, CancellationToken cancellationToken)
-        => await Context.Set<Supplier>().Where(s => s.BusinessId == businessId).ToListAsync(cancellationToken);
-
-    public async Task<bool> ExistsByRucAsync(string ruc, CancellationToken cancellationToken)
-        => await Context.Set<Supplier>().AnyAsync(s => s.Ruc == ruc, cancellationToken);
+    public async Task<IEnumerable<Supplier>> FindAllByBusinessIdAsync(int businessId, CancellationToken cancellationToken = default)
+    {
+        return await Context.Set<Supplier>().Where(supplier => supplier.BusinessId == businessId).ToListAsync(cancellationToken);
+    }
 }
