@@ -1,4 +1,4 @@
-using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Entities;
 using Flowbit.Qullqa.Platform.Iam.Domain.Model.Queries;
 
 namespace Flowbit.Qullqa.Platform.Iam.Application.QueryServices;
