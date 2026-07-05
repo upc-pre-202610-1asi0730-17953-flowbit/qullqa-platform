@@ -1,7 +1,7 @@
-using Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
-namespace Qullqa.Platform.v2.Sales.Domain.Repositories;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Repositories;
 
 public interface ICustomerRepository : IBaseRepository<Customer>
 {
