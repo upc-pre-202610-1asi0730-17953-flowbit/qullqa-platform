@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Sales.Interfaces.Rest.Resources;
+namespace Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Resources;
 
 public record CreateSaleResource(int? CustomerId, string PaymentMethod, string Currency, string Description,
     IReadOnlyCollection<SaleLineResource> Lines);
