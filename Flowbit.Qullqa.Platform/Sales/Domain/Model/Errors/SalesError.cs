@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Sales.Domain.Model.Errors;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Errors;
 
 public enum SalesError
 {
