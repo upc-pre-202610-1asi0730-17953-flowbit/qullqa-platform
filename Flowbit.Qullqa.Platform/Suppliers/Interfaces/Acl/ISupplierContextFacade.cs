@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Suppliers.Interfaces.Acl;
+namespace Flowbit.Qullqa.Platform.Suppliers.Interfaces.Acl;
 
 /// <summary>
 ///     The only way another bounded context may reach into Supplier &amp;
