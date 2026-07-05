@@ -5,6 +5,6 @@ namespace Flowbit.Qullqa.Platform.Alerts.Application.QueryServices;
 
 public interface IAlertQueryService
 {
-    Task<Alert?> Handle(GetAlertByIdQuery query, CancellationToken cancellationToken);
-    Task<IEnumerable<Alert>> Handle(GetAlertsByBusinessQuery query, CancellationToken cancellationToken);
+    Task<IEnumerable<Alert>> Handle(GetActiveAlertsByBusinessIdQuery query, CancellationToken cancellationToken);
+    Task<IEnumerable<Alert>> Handle(GetAlertHistoryByBusinessIdQuery query, CancellationToken cancellationToken);
 }
