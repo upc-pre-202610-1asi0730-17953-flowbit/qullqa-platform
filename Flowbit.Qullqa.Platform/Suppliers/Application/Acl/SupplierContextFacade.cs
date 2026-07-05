@@ -1,7 +1,7 @@
-using Qullqa.Platform.v2.Suppliers.Domain.Repositories;
-using Qullqa.Platform.v2.Suppliers.Interfaces.Acl;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Suppliers.Interfaces.Acl;
 
-namespace Qullqa.Platform.v2.Suppliers.Application.Acl;
+namespace Flowbit.Qullqa.Platform.Suppliers.Application.Acl;
 
 public class SupplierContextFacade(IPurchaseOrderRepository purchaseOrderRepository, ISupplierRepository supplierRepository)
     : ISupplierContextFacade
