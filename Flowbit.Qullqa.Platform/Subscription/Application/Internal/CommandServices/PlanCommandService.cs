@@ -1,14 +1,14 @@
 using Microsoft.Extensions.Localization;
-using Qullqa.Platform.v2.Shared.Application.Model;
-using Qullqa.Platform.v2.Shared.Domain.Repositories;
-using Qullqa.Platform.v2.Subscription.Application.CommandServices;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Commands;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Errors;
-using Qullqa.Platform.v2.Subscription.Domain.Repositories;
-using Qullqa.Platform.v2.Subscription.Resources;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Subscription.Application.CommandServices;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Errors;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Subscription.Resources;
 
-namespace Qullqa.Platform.v2.Subscription.Application.Internal.CommandServices;
+namespace Flowbit.Qullqa.Platform.Subscription.Application.Internal.CommandServices;
 
 /// <summary>Admin/seed only — the frontend has no plan-creation UI (§6.9).</summary>
 public class PlanCommandService(
