@@ -1,7 +1,7 @@
-using Qullqa.Platform.v2.Products.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Products.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Queries;
 
-namespace Qullqa.Platform.v2.Products.Application.QueryServices;
+namespace Flowbit.Qullqa.Platform.Products.Application.QueryServices;
 
 public interface IProductQueryService
 {
