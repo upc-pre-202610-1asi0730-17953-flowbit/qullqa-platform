@@ -1,8 +1,8 @@
-using Qullqa.Platform.v2.Shared.Application.Model;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Commands;
 
-namespace Qullqa.Platform.v2.Suppliers.Application.CommandServices;
+namespace Flowbit.Qullqa.Platform.Suppliers.Application.CommandServices;
 
 public interface ISupplierCommandService
 {
