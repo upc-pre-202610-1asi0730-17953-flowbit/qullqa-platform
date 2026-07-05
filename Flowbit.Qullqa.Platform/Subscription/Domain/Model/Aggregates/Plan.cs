@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Subscription.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates;
 
 public static class PlanStatus
 {
