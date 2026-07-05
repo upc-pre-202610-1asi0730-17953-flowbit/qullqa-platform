@@ -1,7 +1,7 @@
-using Qullqa.Platform.v2.Subscription.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Queries;
 
-namespace Qullqa.Platform.v2.Subscription.Application.QueryServices;
+namespace Flowbit.Qullqa.Platform.Subscription.Application.QueryServices;
 
 public interface IPlanQueryService
 {
