@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Subscription.Interfaces.Acl;
+namespace Flowbit.Qullqa.Platform.Subscription.Interfaces.Acl;
 
 /// <summary>
 ///     The only way another bounded context may reach into Subscription
