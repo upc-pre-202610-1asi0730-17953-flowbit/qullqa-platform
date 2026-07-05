@@ -1,3 +1,3 @@
-namespace Qullqa.Platform.v2.Sales.Interfaces.Rest.Resources;
+namespace Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Resources;
 
 public record UpdateSaleStatusResource(string Status);
