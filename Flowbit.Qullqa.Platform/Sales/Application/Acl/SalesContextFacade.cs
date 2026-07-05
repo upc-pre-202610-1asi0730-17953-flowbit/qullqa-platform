@@ -1,8 +1,8 @@
-using Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Sales.Domain.Repositories;
-using Qullqa.Platform.v2.Sales.Interfaces.Acl;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Sales.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Sales.Interfaces.Acl;
 
-namespace Qullqa.Platform.v2.Sales.Application.Acl;
+namespace Flowbit.Qullqa.Platform.Sales.Application.Acl;
 
 public class SalesContextFacade(ISaleRepository saleRepository) : ISalesContextFacade
 {
