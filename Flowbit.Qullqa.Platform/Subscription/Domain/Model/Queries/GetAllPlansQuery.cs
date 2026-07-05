@@ -1,3 +1,3 @@
-namespace Qullqa.Platform.v2.Subscription.Domain.Model.Queries;
+namespace Flowbit.Qullqa.Platform.Subscription.Domain.Model.Queries;
 
 public record GetAllPlansQuery;
