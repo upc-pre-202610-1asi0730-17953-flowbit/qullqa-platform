@@ -1,0 +1,25 @@
+namespace Flowbit.Qullqa.Platform.Deliveries.Interfaces.Rest.Resources;
+
+public record DeliveryResource(
+    int Id,
+    int BusinessId,
+    string TrackingNumber,
+    string OrderId,
+    string SupplierName,
+    string Origin,
+    string Destination,
+    string DriverName,
+    string DriverPhone,
+    string Vehicle,
+    string LicensePlate,
+    string Status,
+    DateTimeOffset RegisteredAt,
+    DateTimeOffset EstimatedArrival,
+    DateTimeOffset? CompletedAt,
+    string? CurrentLabel,
+    GeoCoordinateResource? CurrentLocation,
+    decimal TotalWeightValue,
+    string TotalWeightUnit,
+    int? PurchaseDetailId,
+    double RouteProgress,
+    IReadOnlyCollection<WaypointResource> Waypoints);
