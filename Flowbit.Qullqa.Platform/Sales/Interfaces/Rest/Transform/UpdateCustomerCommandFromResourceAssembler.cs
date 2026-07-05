@@ -1,7 +1,7 @@
-using Qullqa.Platform.v2.Sales.Domain.Model.Commands;
-using Qullqa.Platform.v2.Sales.Interfaces.Rest.Resources;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Resources;
 
-namespace Qullqa.Platform.v2.Sales.Interfaces.Rest.Transform;
+namespace Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Transform;
 
 public static class UpdateCustomerCommandFromResourceAssembler
 {
