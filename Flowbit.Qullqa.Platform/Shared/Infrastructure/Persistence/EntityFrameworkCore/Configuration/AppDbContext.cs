@@ -1,16 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using Qullqa.Platform.v2.Alerts.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-using Qullqa.Platform.v2.Dashboard.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-using Qullqa.Platform.v2.Deliveries.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-using Qullqa.Platform.v2.Iam.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-using Qullqa.Platform.v2.Products.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-using Qullqa.Platform.v2.Sales.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-using Qullqa.Platform.v2.Suppliers.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-using Qullqa.Platform.v2.Subscription.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
-using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
+using Flowbit.Qullqa.Platform.Alerts.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Dashboard.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Deliveries.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Iam.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Products.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Sales.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Suppliers.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Subscription.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 
-namespace Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
 /// <summary>
 ///     Application database context for the Qullqa platform. A single DbContext
