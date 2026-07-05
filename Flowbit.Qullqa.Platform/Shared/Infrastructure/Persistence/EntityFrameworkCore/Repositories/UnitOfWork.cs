@@ -1,10 +1,33 @@
-using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
-using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Microsoft.EntityFrameworkCore.Storage;
+using Qullqa.Platform.v2.Shared.Domain.Repositories;
+using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
-namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
+/// <summary>
+///     Commits the current change set via AppDbContext.SaveChangesAsync.
+/// </summary>
 public class UnitOfWork(AppDbContext context) : IUnitOfWork
 {
     public async Task CompleteAsync(CancellationToken cancellationToken = default)
-        => await context.SaveChangesAsync(cancellationToken);
+    {
+        await context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<ITransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
+        return new EfTransaction(transaction);
+    }
+
+    private class EfTransaction(IDbContextTransaction transaction) : ITransaction
+    {
+        public Task CommitAsync(CancellationToken cancellationToken = default) =>
+            transaction.CommitAsync(cancellationToken);
+
+        public Task RollbackAsync(CancellationToken cancellationToken = default) =>
+            transaction.RollbackAsync(cancellationToken);
+
+        public ValueTask DisposeAsync() => transaction.DisposeAsync();
+    }
 }

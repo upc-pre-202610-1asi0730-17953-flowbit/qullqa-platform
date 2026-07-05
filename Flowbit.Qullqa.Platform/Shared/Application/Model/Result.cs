@@ -1,5 +1,9 @@
-namespace Flowbit.Qullqa.Platform.Shared.Application.Model;
+namespace Qullqa.Platform.v2.Shared.Application.Model;
 
+/// <summary>
+///     Generic Result class for Command Handlers in the Application Layer.
+/// </summary>
+/// <typeparam name="T">The type of the result value.</typeparam>
 public class Result<T>
 {
     protected Result(bool isSuccess, T? value, string message, Enum? error)
@@ -16,15 +20,33 @@ public class Result<T>
     public string Message { get; }
     public Enum? Error { get; }
 
-    public static Result<T> Success(T value) => new(true, value, string.Empty, null);
-    public static Result<T> Failure(Enum error, string message) => new(false, default, message, error);
-    public static Result<T> Failure(string message) => new(false, default, message, null);
+    public static Result<T> Success(T value)
+    {
+        return new Result<T>(true, value, string.Empty, null);
+    }
+
+    public static Result<T> Failure(Enum error, string message)
+    {
+        return new Result<T>(false, default, message, error);
+    }
 }
 
+/// <summary>
+///     Non-generic Result class for Command Handlers.
+/// </summary>
 public class Result : Result<object>
 {
-    private Result(bool isSuccess, string message, Enum? error) : base(isSuccess, null, message, error) { }
+    private Result(bool isSuccess, string message, Enum? error) : base(isSuccess, null, message, error)
+    {
+    }
 
-    public static Result Success() => new(true, string.Empty, null);
-    public new static Result Failure(Enum error, string message) => new(false, message, error);
+    public static Result Success()
+    {
+        return new Result(true, string.Empty, null);
+    }
+
+    public new static Result Failure(Enum error, string message)
+    {
+        return new Result(false, message, error);
+    }
 }
