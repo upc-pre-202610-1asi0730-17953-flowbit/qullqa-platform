@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Products.Resources;
+namespace Flowbit.Qullqa.Platform.Products.Resources;
 
 /// <summary>
 ///     Marker type for <c>IStringLocalizer&lt;ProductMessages&gt;</c>, resolving to
