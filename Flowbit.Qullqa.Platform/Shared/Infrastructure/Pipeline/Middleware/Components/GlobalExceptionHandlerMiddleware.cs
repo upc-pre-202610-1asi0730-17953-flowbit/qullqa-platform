@@ -1,12 +1,16 @@
-using System.Net.Mime;
 using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Pipeline.Middleware.Components;
 
-public class GlobalExceptionHandlerMiddleware(
-    RequestDelegate next,
-    ILogger<GlobalExceptionHandlerMiddleware> logger)
+/// <summary>
+///     Catches any exception that escapes a controller/middleware further down
+///     the pipeline (including the IAM authorization middleware once it's
+///     wired up) and turns it into a standard RFC 7807 ProblemDetails
+///     response, so no stack trace or internal detail ever leaks to a client.
+/// </summary>
+public class GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlerMiddleware> logger)
 {
     public async Task InvokeAsync(HttpContext context)
     {
@@ -14,35 +18,22 @@ public class GlobalExceptionHandlerMiddleware(
         {
             await next(context);
         }
-        catch (OperationCanceledException ex)
+        catch (Exception exception)
         {
-            logger.LogWarning(ex, "Request was cancelled: {Message}", ex.Message);
-            context.Response.ContentType = MediaTypeNames.Application.Json;
-            context.Response.StatusCode = StatusCodes.Status409Conflict;
-            var problem = new ProblemDetails
-            {
-                Status = StatusCodes.Status409Conflict,
-                Title = "Operation Cancelled",
-                Detail = ex.Message,
-                Instance = context.Request.Path
-            };
-            var json = JsonSerializer.Serialize(problem, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-            await context.Response.WriteAsync(json);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "An unhandled exception occurred: {Message}", ex.Message);
-            context.Response.ContentType = MediaTypeNames.Application.Json;
+            logger.LogError(exception, "Unhandled exception while processing {Path}", context.Request.Path);
+
+            context.Response.ContentType = "application/problem+json";
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            var problem = new ProblemDetails
+
+            var problemDetails = new Microsoft.AspNetCore.Mvc.ProblemDetails
             {
                 Status = StatusCodes.Status500InternalServerError,
-                Title = "Internal Server Error",
-                Detail = ex.Message,
-                Instance = context.Request.Path
+                Title = "An unexpected error occurred.",
+                Detail = "Please try again later or contact support if the problem persists.",
+                Type = "https://httpstatuses.com/500"
             };
-            var json = JsonSerializer.Serialize(problem, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-            await context.Response.WriteAsync(json);
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(problemDetails));
         }
     }
 }
