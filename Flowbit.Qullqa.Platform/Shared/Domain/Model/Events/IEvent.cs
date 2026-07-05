@@ -1,6 +1,6 @@
 using Cortex.Mediator.Notifications;
 
-namespace Qullqa.Platform.v2.Shared.Domain.Model.Events;
+namespace Flowbit.Qullqa.Platform.Shared.Domain.Model.Events;
 
 /// <summary>
 ///     Marker interface for domain events raised by aggregates across bounded
