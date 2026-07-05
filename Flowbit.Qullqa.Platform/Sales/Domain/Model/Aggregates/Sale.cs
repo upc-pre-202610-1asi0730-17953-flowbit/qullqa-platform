@@ -1,6 +1,6 @@
-using Qullqa.Platform.v2.Sales.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Entities;
 
-namespace Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
 
 public static class SaleStatus
 {
