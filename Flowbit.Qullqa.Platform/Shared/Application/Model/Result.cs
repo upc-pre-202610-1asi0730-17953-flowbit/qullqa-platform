@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Shared.Application.Model;
+namespace Flowbit.Qullqa.Platform.Shared.Application.Model;
 
 /// <summary>
 ///     Generic Result class for Command Handlers in the Application Layer.
