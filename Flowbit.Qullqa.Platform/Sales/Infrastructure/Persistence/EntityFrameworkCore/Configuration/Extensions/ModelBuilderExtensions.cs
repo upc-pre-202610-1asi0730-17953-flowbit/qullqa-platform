@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Qullqa.Platform.v2.Iam.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Products.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Sales.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Entities;
 
-namespace Qullqa.Platform.v2.Sales.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+namespace Flowbit.Qullqa.Platform.Sales.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 
 public static class ModelBuilderExtensions
 {
