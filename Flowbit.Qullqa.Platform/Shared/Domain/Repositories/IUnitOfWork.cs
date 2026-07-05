@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Shared.Domain.Repositories;
+namespace Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
 /// <summary>
 ///     Commits the current change set to the database. A single instance per
