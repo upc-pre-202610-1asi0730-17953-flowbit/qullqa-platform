@@ -52,8 +52,19 @@ public class InventoryCommandService(
         }
         else
         {
+            // A brand-new warehouse for this product inherits the threshold
+            // already configured on any of its sibling InventoryItems (kept in
+            // sync by UpdateMinimumStockCommand) instead of silently starting
+            // at 0 — otherwise splitting stock into a second warehouse would
+            // reset "stock mínimo" for that portion until the product is
+            // re-saved.
+            var minimumStock = command.MinimumStock ?? (await inventoryItemRepository
+                .FindAllByProductIdAsync(command.ProductId, cancellationToken))
+                .Select(sibling => sibling.MinimumStock)
+                .FirstOrDefault();
+
             item = new InventoryItem(command.ProductId, command.WarehouseId, command.BusinessId, command.Quantity,
-                command.MinimumStock ?? 0);
+                minimumStock);
             await inventoryItemRepository.AddAsync(item, cancellationToken);
         }
 
@@ -107,22 +118,32 @@ public class InventoryCommandService(
     }
 
     /// <summary>
-    ///     KNOWN LIMITATION: same as RegisterStockSale — operates on the
-    ///     first InventoryItem found for the product until a real
-    ///     multi-warehouse UI needs to target a specific one.
+    ///     Applies the same minimum-stock threshold to every InventoryItem the
+    ///     product has (one per warehouse it's split into) — the product edit
+    ///     form only exposes a single "stock mínimo" field, so this keeps that
+    ///     one value in sync across all of a product's warehouses instead of
+    ///     silently updating only the first one found. Returns the first item
+    ///     (the caller only needs one to build the response resource).
     /// </summary>
     public async Task<Result<InventoryItem>> Handle(UpdateMinimumStockCommand command, CancellationToken cancellationToken)
     {
-        var items = await inventoryItemRepository.FindAllByProductIdAsync(command.ProductId, cancellationToken);
-        var item = items.FirstOrDefault();
-        if (item == null)
+        var items = (await inventoryItemRepository.FindAllByProductIdAsync(command.ProductId, cancellationToken)).ToList();
+        if (items.Count == 0)
             return Result<InventoryItem>.Failure(ProductError.InventoryItemNotFound,
                 localizer[nameof(ProductError.InventoryItemNotFound)]);
 
-        item.UpdateMinimumStock(command.MinimumStock);
-        inventoryItemRepository.Update(item);
+        foreach (var item in items)
+        {
+            item.UpdateMinimumStock(command.MinimumStock);
+            inventoryItemRepository.Update(item);
+        }
+
         await unitOfWork.CompleteAsync(cancellationToken);
-        return Result<InventoryItem>.Success(item);
+
+        foreach (var item in items)
+            await PublishStockLevelChangedEvent(item, cancellationToken);
+
+        return Result<InventoryItem>.Success(items[0]);
     }
 
     /// <summary>
