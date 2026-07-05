@@ -1,7 +1,7 @@
-using Qullqa.Platform.v2.Subscription.Domain.Repositories;
-using Qullqa.Platform.v2.Subscription.Interfaces.Acl;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Subscription.Interfaces.Acl;
 
-namespace Qullqa.Platform.v2.Subscription.Application.Acl;
+namespace Flowbit.Qullqa.Platform.Subscription.Application.Acl;
 
 public class SubscriptionContextFacade(IPlanRepository planRepository) : ISubscriptionContextFacade
 {
