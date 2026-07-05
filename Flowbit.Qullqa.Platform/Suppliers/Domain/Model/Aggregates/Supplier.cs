@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
 
 public static class SupplierStatus
 {
