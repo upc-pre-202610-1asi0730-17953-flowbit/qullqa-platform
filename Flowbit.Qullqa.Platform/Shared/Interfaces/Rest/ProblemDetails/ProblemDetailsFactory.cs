@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Qullqa.Platform.v2.Shared.Interfaces.Rest.ProblemDetails;
+namespace Flowbit.Qullqa.Platform.Shared.Interfaces.Rest.ProblemDetails;
 
 /// <summary>
 ///     Builds RFC 7807 ProblemDetails responses consistently across every
