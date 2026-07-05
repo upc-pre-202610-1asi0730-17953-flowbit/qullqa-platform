@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
 
 public class Customer(int businessId, string fullName, string documentNumber, string phoneNumber, string email)
 {
