@@ -1,5 +1,4 @@
-using Flowbit.Qullqa.Platform.Dashboard.Domain.Model.Enums;
-
 namespace Flowbit.Qullqa.Platform.Dashboard.Domain.Model.Commands;
 
-public record GenerateReportCommand(int BusinessId, ReportType Type, string Filters);
+/// <summary>Persists the report's metadata (for history) and returns it — the actual figures are computed live, not stored (see Report.cs).</summary>
+public record GenerateReportCommand(int BusinessId, string Type, DateOnly? DateFrom, DateOnly? DateTo);
