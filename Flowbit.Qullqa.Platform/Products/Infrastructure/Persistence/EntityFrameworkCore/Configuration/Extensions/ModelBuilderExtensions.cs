@@ -91,7 +91,7 @@ public static class ModelBuilderExtensions
             entity.Property(movement => movement.Note).HasMaxLength(500);
 
             entity.HasOne<Product>().WithMany().HasForeignKey(movement => movement.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             entity.HasOne<Warehouse>().WithMany().HasForeignKey(movement => movement.WarehouseId)
                 .OnDelete(DeleteBehavior.Restrict);
             entity.HasOne<Business>().WithMany().HasForeignKey(movement => movement.BusinessId)
