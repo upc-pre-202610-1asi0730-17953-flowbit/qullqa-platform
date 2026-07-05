@@ -1,38 +1,63 @@
 using Microsoft.EntityFrameworkCore;
-using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
-using Flowbit.Qullqa.Platform.Sales.Domain.Model.Enums;
+using Qullqa.Platform.v2.Iam.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Products.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Sales.Domain.Model.Entities;
 
-namespace Flowbit.Qullqa.Platform.Sales.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+namespace Qullqa.Platform.v2.Sales.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 
 public static class ModelBuilderExtensions
 {
     public static void ApplySalesConfiguration(this ModelBuilder builder)
     {
-        builder.Entity<Customer>(entity =>
-        {
-            entity.HasKey(c => c.Id);
-            entity.Property(c => c.FullName).IsRequired().HasMaxLength(200);
-            entity.Property(c => c.DocumentNumber).HasMaxLength(20);
-            entity.Property(c => c.PhoneNumber).HasMaxLength(20);
-        });
-
         builder.Entity<Sale>(entity =>
         {
-            entity.HasKey(s => s.Id);
-            entity.Property(s => s.Currency).HasMaxLength(10);
-            entity.Property(s => s.Description).HasMaxLength(500);
-            entity.Property(s => s.TotalAmount).HasColumnType("decimal(10,2)");
-            entity.Property(s => s.Status).HasConversion<string>();
-            entity.Property(s => s.PaymentMethod).HasConversion<string>();
-            entity.HasMany(s => s.Details).WithOne().HasForeignKey(d => d.SaleId);
+            entity.HasKey(sale => sale.Id);
+            entity.Property(sale => sale.Id).ValueGeneratedOnAdd();
+            entity.Property(sale => sale.Status).IsRequired().HasMaxLength(20);
+            entity.Property(sale => sale.TotalAmount).HasColumnType("decimal(10,2)");
+            entity.Property(sale => sale.PaymentMethod).IsRequired().HasMaxLength(50);
+            entity.Property(sale => sale.Description).HasMaxLength(500);
+            entity.Property(sale => sale.Currency).IsRequired().HasMaxLength(10);
+
+            entity.HasOne<Business>().WithMany().HasForeignKey(sale => sale.BusinessId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Anonymous sales are valid (customerId: null) — see §6.4.
+            entity.HasOne<Customer>().WithMany().HasForeignKey(sale => sale.CustomerId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
+
+            // SaleDetails is a private-field-backed collection — the aggregate
+            // boundary is enforced in code (Sale.AddLine), EF just needs to
+            // know where to materialize rows into.
+            entity.HasMany(sale => sale.SaleDetails).WithOne().HasForeignKey(detail => detail.SaleId)
+                .OnDelete(DeleteBehavior.Cascade);
+            entity.Metadata.FindNavigation(nameof(Sale.SaleDetails))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         });
 
         builder.Entity<SaleDetail>(entity =>
         {
-            entity.HasKey(d => d.Id);
-            entity.Property(d => d.UnitPrice).HasColumnType("decimal(10,2)");
-            entity.Property(d => d.Discount).HasColumnType("decimal(10,2)");
-            entity.Ignore(d => d.LineTotal);
+            entity.HasKey(detail => detail.Id);
+            entity.Property(detail => detail.Id).ValueGeneratedOnAdd();
+            entity.Property(detail => detail.UnitPrice).HasColumnType("decimal(10,2)");
+            entity.Property(detail => detail.Discount).HasColumnType("decimal(5,4)");
+
+            entity.HasOne<Product>().WithMany().HasForeignKey(detail => detail.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<Customer>(entity =>
+        {
+            entity.HasKey(customer => customer.Id);
+            entity.Property(customer => customer.Id).ValueGeneratedOnAdd();
+            entity.Property(customer => customer.FullName).IsRequired().HasMaxLength(150);
+            entity.Property(customer => customer.DocumentNumber).HasMaxLength(20);
+            entity.Property(customer => customer.PhoneNumber).HasMaxLength(20);
+            entity.Property(customer => customer.Email).HasMaxLength(150);
+
+            entity.HasOne<Business>().WithMany().HasForeignKey(customer => customer.BusinessId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

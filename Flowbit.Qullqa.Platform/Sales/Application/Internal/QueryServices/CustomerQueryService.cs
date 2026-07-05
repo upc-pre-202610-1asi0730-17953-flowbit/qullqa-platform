@@ -1,12 +1,19 @@
-using Flowbit.Qullqa.Platform.Sales.Application.QueryServices;
-using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
-using Flowbit.Qullqa.Platform.Sales.Domain.Model.Queries;
-using Flowbit.Qullqa.Platform.Sales.Domain.Repositories;
+using Qullqa.Platform.v2.Sales.Application.QueryServices;
+using Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Sales.Domain.Model.Queries;
+using Qullqa.Platform.v2.Sales.Domain.Repositories;
 
-namespace Flowbit.Qullqa.Platform.Sales.Application.Internal.QueryServices;
+namespace Qullqa.Platform.v2.Sales.Application.Internal.QueryServices;
 
 public class CustomerQueryService(ICustomerRepository customerRepository) : ICustomerQueryService
 {
-    public async Task<IEnumerable<Customer>> Handle(GetCustomersByBusinessQuery query, CancellationToken cancellationToken)
-        => await customerRepository.FindByBusinessIdAsync(query.BusinessId, cancellationToken);
+    public async Task<IEnumerable<Customer>> Handle(GetAllCustomersByBusinessIdQuery query, CancellationToken cancellationToken)
+    {
+        return await customerRepository.FindAllByBusinessIdAsync(query.BusinessId, cancellationToken);
+    }
+
+    public async Task<Customer?> Handle(GetCustomerByIdQuery query, CancellationToken cancellationToken)
+    {
+        return await customerRepository.FindByIdAsync(query.CustomerId, cancellationToken);
+    }
 }

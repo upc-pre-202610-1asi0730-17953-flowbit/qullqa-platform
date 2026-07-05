@@ -1,10 +1,13 @@
-using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
-using Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Resources;
+using Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Sales.Interfaces.Rest.Resources;
 
-namespace Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Transform;
+namespace Qullqa.Platform.v2.Sales.Interfaces.Rest.Transform;
 
 public static class CustomerResourceFromEntityAssembler
 {
-    public static CustomerResource ToResourceFromEntity(Customer c) => new(
-        c.Id, c.BusinessId, c.FullName, c.DocumentNumber, c.PhoneNumber, c.RegisteredAt);
+    public static CustomerResource ToResourceFromEntity(Customer customer)
+    {
+        return new CustomerResource(customer.Id, customer.BusinessId, customer.FullName, customer.DocumentNumber,
+            customer.PhoneNumber, customer.Email, customer.RegisteredAt);
+    }
 }

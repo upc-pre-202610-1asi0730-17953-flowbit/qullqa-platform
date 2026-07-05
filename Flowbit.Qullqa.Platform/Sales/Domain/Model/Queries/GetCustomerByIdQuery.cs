@@ -1,3 +1,3 @@
 namespace Qullqa.Platform.v2.Sales.Domain.Model.Queries;
 
-public record GetSaleByIdQuery(int SaleId);
+public record GetCustomerByIdQuery(int CustomerId);

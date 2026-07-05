@@ -1,13 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
-using Flowbit.Qullqa.Platform.Sales.Domain.Repositories;
-using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
-using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Sales.Domain.Repositories;
+using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
-namespace Flowbit.Qullqa.Platform.Sales.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Qullqa.Platform.v2.Sales.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
 public class CustomerRepository(AppDbContext context) : BaseRepository<Customer>(context), ICustomerRepository
 {
-    public async Task<IEnumerable<Customer>> FindByBusinessIdAsync(int businessId, CancellationToken cancellationToken)
-        => await Context.Set<Customer>().Where(c => c.BusinessId == businessId).ToListAsync(cancellationToken);
+    public async Task<IEnumerable<Customer>> FindAllByBusinessIdAsync(int businessId, CancellationToken cancellationToken = default)
+    {
+        return await Context.Set<Customer>().Where(customer => customer.BusinessId == businessId).ToListAsync(cancellationToken);
+    }
 }

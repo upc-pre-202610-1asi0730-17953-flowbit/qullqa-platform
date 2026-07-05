@@ -1,7 +1,13 @@
-using Flowbit.Qullqa.Platform.Sales.Domain.Model.Enums;
+namespace Qullqa.Platform.v2.Sales.Interfaces.Rest.Resources;
 
-namespace Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Resources;
-
-public record SaleResource(int Id, int BusinessId, int? CustomerId, SaleStatus Status, decimal TotalAmount,
-    PaymentMethod? PaymentMethod, DateTimeOffset Date, string Description, string Currency,
-    IEnumerable<SaleDetailResource> Details);
+public record SaleResource(
+    int Id,
+    int BusinessId,
+    int? CustomerId,
+    string Status,
+    decimal TotalAmount,
+    string PaymentMethod,
+    DateTimeOffset Date,
+    string Description,
+    string Currency,
+    IReadOnlyCollection<SaleDetailResource> Details);

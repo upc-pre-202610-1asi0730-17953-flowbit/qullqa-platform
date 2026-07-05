@@ -1,27 +1,25 @@
-using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
+namespace Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
 
-namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
-
-public class Customer : IAuditableEntity
+public class Customer(int businessId, string fullName, string documentNumber, string phoneNumber, string email)
 {
-    public Customer() { }
-    public Customer(int businessId, string fullName, string documentNumber, string phoneNumber)
+    public Customer() : this(0, string.Empty, string.Empty, string.Empty, string.Empty)
     {
-        BusinessId = businessId; FullName = fullName; DocumentNumber = documentNumber; PhoneNumber = phoneNumber;
-        RegisteredAt = DateTimeOffset.UtcNow;
     }
 
-    public int Id { get; private set; }
-    public int BusinessId { get; private set; }
-    public string FullName { get; private set; } = string.Empty;
-    public string DocumentNumber { get; private set; } = string.Empty;
-    public string PhoneNumber { get; private set; } = string.Empty;
-    public DateTimeOffset RegisteredAt { get; private set; }
-    public DateTimeOffset? CreatedAt { get; private set; }
-    public DateTimeOffset? UpdatedAt { get; private set; }
+    public int Id { get; }
+    public int BusinessId { get; private set; } = businessId;
+    public string FullName { get; private set; } = fullName;
+    public string DocumentNumber { get; private set; } = documentNumber;
+    public string PhoneNumber { get; private set; } = phoneNumber;
+    public string Email { get; private set; } = email;
+    public DateTimeOffset RegisteredAt { get; private set; } = DateTimeOffset.UtcNow;
 
-    public Customer Update(string fullName, string documentNumber, string phoneNumber)
+    public Customer UpdateDetails(string fullName, string documentNumber, string phoneNumber, string email)
     {
-        FullName = fullName; DocumentNumber = documentNumber; PhoneNumber = phoneNumber; return this;
+        FullName = fullName;
+        DocumentNumber = documentNumber;
+        PhoneNumber = phoneNumber;
+        Email = email;
+        return this;
     }
 }

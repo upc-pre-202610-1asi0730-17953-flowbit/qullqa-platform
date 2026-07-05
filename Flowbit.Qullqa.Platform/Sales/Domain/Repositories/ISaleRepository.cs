@@ -1,10 +1,16 @@
-using Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
-using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
+using Qullqa.Platform.v2.Sales.Domain.Model.Aggregates;
+using Qullqa.Platform.v2.Shared.Domain.Repositories;
 
-namespace Flowbit.Qullqa.Platform.Sales.Domain.Repositories;
+namespace Qullqa.Platform.v2.Sales.Domain.Repositories;
 
 public interface ISaleRepository : IBaseRepository<Sale>
 {
-    Task<IEnumerable<Sale>> FindByBusinessIdAsync(int businessId, CancellationToken cancellationToken);
-    Task<Sale?> FindByIdWithDetailsAsync(int id, CancellationToken cancellationToken);
+    Task<IEnumerable<Sale>> FindAllByBusinessIdAsync(int businessId, DateOnly? dateFrom, DateOnly? dateTo,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>FindByIdAsync (from IBaseRepository) does not eager-load SaleDetails — use this when the lines are needed.</summary>
+    Task<Sale?> FindByIdWithDetailsAsync(int id, CancellationToken cancellationToken = default);
+
+    Task<decimal> SumPaidTotalByBusinessIdAsync(int businessId, DateOnly? dateFrom, DateOnly? dateTo,
+        CancellationToken cancellationToken = default);
 }
