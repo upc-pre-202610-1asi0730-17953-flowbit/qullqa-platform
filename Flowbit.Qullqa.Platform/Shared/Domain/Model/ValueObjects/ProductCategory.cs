@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Shared.Domain.Model.ValueObjects;
+namespace Flowbit.Qullqa.Platform.Shared.Domain.Model.ValueObjects;
 
 /// <summary>
 ///     Shared category vocabulary — used by both Product (its own catalog
