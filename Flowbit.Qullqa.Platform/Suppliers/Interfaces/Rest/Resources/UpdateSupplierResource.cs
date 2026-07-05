@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Suppliers.Interfaces.Rest.Resources;
+namespace Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest.Resources;
 
 public record UpdateSupplierResource(
     string Name,
