@@ -1,6 +1,6 @@
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Entities;
 
-namespace Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
 
 public static class PurchaseOrderStatus
 {
