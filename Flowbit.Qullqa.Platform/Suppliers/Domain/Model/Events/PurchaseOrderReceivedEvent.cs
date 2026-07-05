@@ -1,6 +1,6 @@
-using Qullqa.Platform.v2.Shared.Domain.Model.Events;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Events;
 
-namespace Qullqa.Platform.v2.Suppliers.Domain.Model.Events;
+namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Events;
 
 /// <summary>
 ///     Raised after a purchase order is marked RECEIVED. Stock has already
