@@ -7,9 +7,13 @@ namespace Flowbit.Qullqa.Platform.Suppliers.Application.Internal.QueryServices;
 
 public class SupplierQueryService(ISupplierRepository supplierRepository) : ISupplierQueryService
 {
-    public async Task<Supplier?> Handle(GetSupplierByIdQuery query, CancellationToken cancellationToken)
-        => await supplierRepository.FindByIdAsync(query.Id, cancellationToken);
+    public async Task<IEnumerable<Supplier>> Handle(GetAllSuppliersByBusinessIdQuery query, CancellationToken cancellationToken)
+    {
+        return await supplierRepository.FindAllByBusinessIdAsync(query.BusinessId, cancellationToken);
+    }
 
-    public async Task<IEnumerable<Supplier>> Handle(GetSuppliersByBusinessQuery query, CancellationToken cancellationToken)
-        => await supplierRepository.FindByBusinessIdAsync(query.BusinessId, cancellationToken);
+    public async Task<Supplier?> Handle(GetSupplierByIdQuery query, CancellationToken cancellationToken)
+    {
+        return await supplierRepository.FindByIdAsync(query.SupplierId, cancellationToken);
+    }
 }

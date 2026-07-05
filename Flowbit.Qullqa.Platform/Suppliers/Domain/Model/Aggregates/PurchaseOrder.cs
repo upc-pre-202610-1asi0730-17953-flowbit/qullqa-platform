@@ -1,43 +1,78 @@
-using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Enums;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Entities;
 
 namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
 
-public class PurchaseOrder : IAuditableEntity
+public static class PurchaseOrderStatus
 {
-    public int Id { get; private set; }
-    public int BusinessId { get; private set; }
-    public int SupplierId { get; private set; }
-    public string SupplierName { get; private set; } = string.Empty;
-    public DateTimeOffset Date { get; private set; }
-    public DateTimeOffset? ExpectedDate { get; private set; }
-    public DateTimeOffset? ReceivedDate { get; private set; }
-    public PurchaseOrderStatus Status { get; private set; } = PurchaseOrderStatus.Generated;
-    public string Currency { get; private set; } = "PEN";
-    public string Description { get; private set; } = string.Empty;
-    public ICollection<PurchaseOrderDetail> Details { get; private set; } = new List<PurchaseOrderDetail>();
-    public DateTimeOffset? CreatedAt { get; private set; }
-    public DateTimeOffset? UpdatedAt { get; private set; }
+    public const string Pending = "PENDING";
+    public const string Received = "RECEIVED";
+    public const string Delayed = "DELAYED";
+    public const string Cancelled = "CANCELLED";
+}
 
-    protected PurchaseOrder() { }
+/// <summary>
+///     A purchase order placed with a supplier. Moving to RECEIVED is the
+///     one status transition with a real side effect: it triggers an actual
+///     stock intake for every line (see PurchaseOrderCommandService), distinct
+///     from a manual inventory intake — this distinction already exists as
+///     help text in the frontend and is only formalized here.
+/// </summary>
+public class PurchaseOrder
+{
+    private readonly List<PurchaseOrderDetail> _details = [];
 
-    public PurchaseOrder(int businessId, int supplierId, string supplierName, DateTimeOffset? expectedDate, string description, string currency = "PEN")
+    public PurchaseOrder(int businessId, int supplierId, DateOnly date, DateOnly? expectedDate, string currency, string description)
     {
         BusinessId = businessId;
         SupplierId = supplierId;
-        SupplierName = supplierName;
+        Date = date;
         ExpectedDate = expectedDate;
-        Description = description;
         Currency = currency;
-        Date = DateTimeOffset.UtcNow;
+        Description = description;
+        Status = PurchaseOrderStatus.Pending;
     }
 
-    public void Receive()
+    public PurchaseOrder()
+    {
+        Currency = string.Empty;
+        Description = string.Empty;
+        Status = PurchaseOrderStatus.Pending;
+    }
+
+    public int Id { get; }
+    public int BusinessId { get; private set; }
+    public int SupplierId { get; private set; }
+    public DateOnly Date { get; private set; }
+    public DateOnly? ExpectedDate { get; private set; }
+    public DateOnly? ReceivedDate { get; private set; }
+    public string Status { get; private set; }
+    public string Currency { get; private set; }
+    public string Description { get; private set; }
+
+    public IReadOnlyCollection<PurchaseOrderDetail> Details => _details.AsReadOnly();
+
+    public PurchaseOrder AddLine(int productId, int quantity, decimal unitPrice, decimal discount)
+    {
+        _details.Add(new PurchaseOrderDetail(Id, productId, quantity, unitPrice, discount, string.Empty, string.Empty));
+        return this;
+    }
+
+    public PurchaseOrder MarkReceived(DateOnly receivedDate)
     {
         Status = PurchaseOrderStatus.Received;
-        ReceivedDate = DateTimeOffset.UtcNow;
+        ReceivedDate = receivedDate;
+        return this;
     }
 
-    public void MarkDelayed() => Status = PurchaseOrderStatus.Delayed;
-    public void Cancel() => Status = PurchaseOrderStatus.Cancelled;
+    public PurchaseOrder MarkDelayed()
+    {
+        Status = PurchaseOrderStatus.Delayed;
+        return this;
+    }
+
+    public PurchaseOrder Cancel()
+    {
+        Status = PurchaseOrderStatus.Cancelled;
+        return this;
+    }
 }

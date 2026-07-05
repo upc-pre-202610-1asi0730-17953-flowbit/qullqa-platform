@@ -5,6 +5,6 @@ namespace Flowbit.Qullqa.Platform.Suppliers.Application.QueryServices;
 
 public interface ISupplierQueryService
 {
+    Task<IEnumerable<Supplier>> Handle(GetAllSuppliersByBusinessIdQuery query, CancellationToken cancellationToken);
     Task<Supplier?> Handle(GetSupplierByIdQuery query, CancellationToken cancellationToken);
-    Task<IEnumerable<Supplier>> Handle(GetSuppliersByBusinessQuery query, CancellationToken cancellationToken);
 }

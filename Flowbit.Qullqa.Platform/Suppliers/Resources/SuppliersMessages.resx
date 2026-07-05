@@ -42,18 +42,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SupplierNotFound" xml:space="preserve">
-    <value>Proveedor no encontrado.</value>
+    <value>Supplier not found.</value>
   </data>
   <data name="PurchaseOrderNotFound" xml:space="preserve">
-    <value>Orden de compra no encontrada.</value>
+    <value>Purchase order not found.</value>
   </data>
   <data name="InvalidStatusTransition" xml:space="preserve">
-    <value>Estado inválido para esta orden de compra.</value>
+    <value>Invalid status for this purchase order.</value>
   </data>
   <data name="EmptyPurchaseOrderLines" xml:space="preserve">
-    <value>Una orden de compra debe tener al menos una línea.</value>
+    <value>A purchase order must have at least one line.</value>
   </data>
   <data name="DatabaseError" xml:space="preserve">
-    <value>Ocurrió un error de base de datos al completar la operación.</value>
+    <value>A database error occurred while completing the operation.</value>
   </data>
 </root>
