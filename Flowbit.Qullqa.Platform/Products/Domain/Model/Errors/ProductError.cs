@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Products.Domain.Model.Errors;
+namespace Flowbit.Qullqa.Platform.Products.Domain.Model.Errors;
 
 public enum ProductError
 {
