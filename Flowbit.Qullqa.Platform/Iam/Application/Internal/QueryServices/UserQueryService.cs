@@ -8,11 +8,17 @@ namespace Flowbit.Qullqa.Platform.Iam.Application.Internal.QueryServices;
 public class UserQueryService(IUserRepository userRepository) : IUserQueryService
 {
     public async Task<User?> Handle(GetUserByIdQuery query, CancellationToken cancellationToken)
-        => await userRepository.FindByIdAsync(query.Id, cancellationToken);
+    {
+        return await userRepository.FindByIdAsync(query.UserId, cancellationToken);
+    }
 
     public async Task<User?> Handle(GetUserByEmailQuery query, CancellationToken cancellationToken)
-        => await userRepository.FindByEmailAsync(query.Email, cancellationToken);
+    {
+        return await userRepository.FindByEmailAsync(query.Email, cancellationToken);
+    }
 
-    public async Task<IEnumerable<User>> Handle(GetAllUsersQuery query, CancellationToken cancellationToken)
-        => await userRepository.ListAsync(cancellationToken);
+    public async Task<IEnumerable<User>> Handle(GetAllUsersByBusinessIdQuery query, CancellationToken cancellationToken)
+    {
+        return await userRepository.FindAllByBusinessIdAsync(query.BusinessId, cancellationToken);
+    }
 }

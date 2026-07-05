@@ -1,37 +1,65 @@
 using System.Text.Json.Serialization;
-using Flowbit.Qullqa.Platform.Iam.Domain.Model.Enums;
-using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
 
 namespace Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
 
-public class User : IAuditableEntity
+/// <summary>
+///     The user aggregate — an individual with access to a Business (tenant).
+///     Password is never exposed on serialization; only PasswordHash is
+///     persisted, set once at creation and only ever changed through
+///     UpdatePasswordHash (BCrypt-hashed by the caller, never plain text).
+/// </summary>
+public class User(
+    string email,
+    string passwordHash,
+    string name,
+    string lastName,
+    int businessId,
+    int roleId,
+    string phone = "")
 {
-    public User() { }
-    public User(string email, string passwordHash, string firstName, string lastName, int? businessId = null, int? roleId = null)
+    public User() : this(string.Empty, string.Empty, string.Empty, string.Empty, 0, 0)
     {
-        Email = email;
-        PasswordHash = passwordHash;
-        FirstName = firstName;
-        LastName = lastName;
-        BusinessId = businessId;
-        RoleId = roleId;
-        Status = UserStatus.Active;
     }
 
-    public int Id { get; private set; }
-    public string Email { get; private set; } = string.Empty;
-    [JsonIgnore] public string PasswordHash { get; private set; } = string.Empty;
-    public string FirstName { get; private set; } = string.Empty;
-    public string LastName { get; private set; } = string.Empty;
-    public int? BusinessId { get; private set; }
-    public int? RoleId { get; private set; }
-    public UserStatus Status { get; private set; } = UserStatus.Active;
-    public DateTimeOffset? CreatedAt { get; private set; }
-    public DateTimeOffset? UpdatedAt { get; private set; }
+    public int Id { get; }
+    public string Email { get; private set; } = email;
 
-    public User UpdatePasswordHash(string passwordHash) { PasswordHash = passwordHash; return this; }
-    public User UpdateStatus(UserStatus status) { Status = status; return this; }
-    public User UpdateProfile(string firstName, string lastName) { FirstName = firstName; LastName = lastName; return this; }
-    public User AssignBusiness(int businessId) { BusinessId = businessId; return this; }
-    public User AssignRole(int roleId) { RoleId = roleId; return this; }
+    [JsonIgnore] public string PasswordHash { get; private set; } = passwordHash;
+
+    public string Name { get; private set; } = name;
+    public string LastName { get; private set; } = lastName;
+    public int BusinessId { get; private set; } = businessId;
+    public int RoleId { get; private set; } = roleId;
+    public string Status { get; private set; } = "ACTIVE";
+    public string Phone { get; private set; } = phone;
+
+    public User UpdateProfile(string name, string lastName, string phone)
+    {
+        Name = name;
+        LastName = lastName;
+        Phone = phone;
+        return this;
+    }
+
+    public User UpdatePasswordHash(string passwordHash)
+    {
+        PasswordHash = passwordHash;
+        return this;
+    }
+
+    /// <summary>
+    ///     Links this user to a Business once it's created — used only during
+    ///     the atomic sign-up flow (see UserCommandService.Handle(SignUpCommand)).
+    /// </summary>
+    public User LinkToBusiness(int businessId)
+    {
+        BusinessId = businessId;
+        return this;
+    }
+
+    public User Deactivate()
+    {
+        Status = "INACTIVE";
+        return this;
+    }
 }

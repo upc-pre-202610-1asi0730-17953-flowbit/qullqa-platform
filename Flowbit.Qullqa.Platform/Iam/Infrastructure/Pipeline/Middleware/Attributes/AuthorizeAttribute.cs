@@ -1,17 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
-
 namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class AuthorizeAttribute : Attribute, IAuthorizationFilter
+/// <summary>
+///     Documents that an action requires a valid bearer token. Purely
+///     informational today — RequestAuthorizationMiddleware requires a valid
+///     token on every endpoint by default, unless [AllowAnonymous] is present.
+/// </summary>
+[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
+public class AuthorizeAttribute : Attribute
 {
-    public void OnAuthorization(AuthorizationFilterContext context)
-    {
-        var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
-        if (allowAnonymous) return;
-        var user = (User?)context.HttpContext.Items["User"];
-        if (user == null) context.Result = new UnauthorizedResult();
-    }
 }
