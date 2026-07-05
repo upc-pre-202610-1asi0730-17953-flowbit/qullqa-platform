@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Qullqa.Platform.v2.Products.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Products.Domain.Repositories;
-using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
-using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Products.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
-namespace Qullqa.Platform.v2.Products.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Flowbit.Qullqa.Platform.Products.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
 public class ProductRepository(AppDbContext context) : BaseRepository<Product>(context), IProductRepository
 {
