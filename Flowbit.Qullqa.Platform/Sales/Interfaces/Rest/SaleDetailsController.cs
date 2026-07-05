@@ -1,12 +1,12 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
-using Qullqa.Platform.v2.Iam.Infrastructure.Pipeline.Middleware.Attributes;
-using Qullqa.Platform.v2.Sales.Application.QueryServices;
-using Qullqa.Platform.v2.Sales.Domain.Model.Queries;
-using Qullqa.Platform.v2.Sales.Interfaces.Rest.Transform;
+using Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
+using Flowbit.Qullqa.Platform.Sales.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Transform;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Qullqa.Platform.v2.Sales.Interfaces.Rest;
+namespace Flowbit.Qullqa.Platform.Sales.Interfaces.Rest;
 
 /// <summary>
 ///     Read-only by design: a sale's lines are always created atomically
