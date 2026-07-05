@@ -1,8 +1,8 @@
-using Qullqa.Platform.v2.Shared.Application.Model;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Commands;
 
-namespace Qullqa.Platform.v2.Subscription.Application.CommandServices;
+namespace Flowbit.Qullqa.Platform.Subscription.Application.CommandServices;
 
 public interface IPlanCommandService
 {
