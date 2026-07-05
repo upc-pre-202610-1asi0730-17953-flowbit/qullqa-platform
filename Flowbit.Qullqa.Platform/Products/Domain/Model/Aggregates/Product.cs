@@ -1,6 +1,6 @@
-using Qullqa.Platform.v2.Shared.Domain.Model.ValueObjects;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.ValueObjects;
 
-namespace Qullqa.Platform.v2.Products.Domain.Model.Aggregates;
+namespace Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates;
 
 public static class ProductStatus
 {
