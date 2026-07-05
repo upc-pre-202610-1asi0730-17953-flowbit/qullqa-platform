@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Qullqa.Platform.v2.Shared.Application.Model;
-using Qullqa.Platform.v2.Shared.Interfaces.Rest.ProblemDetails;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Errors;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Shared.Interfaces.Rest.ProblemDetails;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Errors;
 
-namespace Qullqa.Platform.v2.Subscription.Interfaces.Rest.Transform;
+namespace Flowbit.Qullqa.Platform.Subscription.Interfaces.Rest.Transform;
 
 public static class SubscriptionActionResultAssembler
 {
