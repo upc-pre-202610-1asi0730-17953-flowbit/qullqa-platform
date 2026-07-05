@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Suppliers.Domain.Model.Commands;
+namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Commands;
 
 public record CreateSupplierCommand(
     int BusinessId,
