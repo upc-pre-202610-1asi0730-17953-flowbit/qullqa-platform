@@ -1,7 +1,7 @@
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Queries;
 
-namespace Qullqa.Platform.v2.Suppliers.Application.QueryServices;
+namespace Flowbit.Qullqa.Platform.Suppliers.Application.QueryServices;
 
 public interface IPurchaseOrderQueryService
 {
