@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore.Storage;
-using Qullqa.Platform.v2.Shared.Domain.Repositories;
-using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
 
-namespace Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
 /// <summary>
 ///     Commits the current change set via AppDbContext.SaveChangesAsync.
