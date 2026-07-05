@@ -6,5 +6,4 @@ namespace Flowbit.Qullqa.Platform.Iam.Application.QueryServices;
 public interface IBusinessQueryService
 {
     Task<Business?> Handle(GetBusinessByIdQuery query, CancellationToken cancellationToken);
-    Task<IEnumerable<Business>> Handle(GetAllBusinessesQuery query, CancellationToken cancellationToken);
 }
