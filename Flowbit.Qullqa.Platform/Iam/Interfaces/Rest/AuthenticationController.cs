@@ -1,44 +1,55 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Flowbit.Qullqa.Platform.Iam.Application.CommandServices;
-using Flowbit.Qullqa.Platform.Iam.Domain.Model.Commands;
 using Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
 using Flowbit.Qullqa.Platform.Iam.Interfaces.Rest.Resources;
 using Flowbit.Qullqa.Platform.Iam.Interfaces.Rest.Transform;
+using Flowbit.Qullqa.Platform.Shared.Interfaces.Rest.ProblemDetails;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flowbit.Qullqa.Platform.Iam.Interfaces.Rest;
 
-[Authorize]
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/v1/authentication")]
 [Produces(MediaTypeNames.Application.Json)]
-[SwaggerTag("Authentication endpoints")]
-public class AuthenticationController(IUserCommandService userCommandService) : ControllerBase
+[SwaggerTag("Sign-in and sign-up")]
+public class AuthenticationController(
+    IUserCommandService userCommandService,
+    ProblemDetailsFactory problemDetailsFactory)
+    : ControllerBase
 {
+    /// <summary>Authenticates a user with email/password and returns a JWT.</summary>
     [HttpPost("sign-in")]
     [AllowAnonymous]
     [SwaggerOperation(Summary = "Sign in", OperationId = "SignIn")]
     [SwaggerResponse(StatusCodes.Status200OK, "Authenticated", typeof(AuthenticatedUserResource))]
-    [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid credentials")]
+    [SwaggerResponse(StatusCodes.Status401Unauthorized, "Invalid credentials")]
     public async Task<IActionResult> SignIn([FromBody] SignInResource resource, CancellationToken cancellationToken)
     {
-        var command = new SignInCommand(resource.Email, resource.Password);
+        var command = SignInCommandFromResourceAssembler.ToCommandFromResource(resource);
         var result = await userCommandService.Handle(command, cancellationToken);
-        if (result.IsFailure) return BadRequest(new { message = result.Message });
-        return Ok(AuthenticatedUserResourceFromEntityAssembler.ToResourceFromEntity(result.Value!.user, result.Value!.token));
+
+        return IamActionResultAssembler.ToActionResult(result, problemDetailsFactory,
+            authenticated => Ok(AuthenticatedUserResourceFromEntityAssembler.ToResourceFromEntity(
+                authenticated.user, authenticated.token)));
     }
 
+    /// <summary>
+    ///     Creates a User and its Business atomically, and returns a JWT —
+    ///     the frontend auto-logs the user in right after registering.
+    /// </summary>
     [HttpPost("sign-up")]
     [AllowAnonymous]
     [SwaggerOperation(Summary = "Sign up", OperationId = "SignUp")]
-    [SwaggerResponse(StatusCodes.Status200OK, "User created")]
-    [SwaggerResponse(StatusCodes.Status400BadRequest, "Registration failed")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Account created", typeof(AuthenticatedUserResource))]
+    [SwaggerResponse(StatusCodes.Status409Conflict, "Email already registered")]
     public async Task<IActionResult> SignUp([FromBody] SignUpResource resource, CancellationToken cancellationToken)
     {
-        var command = new SignUpCommand(resource.Email, resource.Password, resource.FirstName, resource.LastName);
+        var command = SignUpCommandFromResourceAssembler.ToCommandFromResource(resource);
         var result = await userCommandService.Handle(command, cancellationToken);
-        if (result.IsFailure) return BadRequest(new { message = result.Message });
-        return Ok(new { message = "User created successfully." });
+
+        return IamActionResultAssembler.ToActionResult(result, problemDetailsFactory,
+            authenticated => Ok(AuthenticatedUserResourceFromEntityAssembler.ToResourceFromEntity(
+                authenticated.user, authenticated.token)));
     }
 }

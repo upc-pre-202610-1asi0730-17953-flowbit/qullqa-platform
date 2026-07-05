@@ -6,5 +6,5 @@ namespace Flowbit.Qullqa.Platform.Iam.Application.CommandServices;
 
 public interface IBusinessCommandService
 {
-    Task<Result<Business>> Handle(CreateBusinessCommand command, CancellationToken cancellationToken);
+    Task<Result<Business>> Handle(UpdateBusinessCommand command, CancellationToken cancellationToken);
 }

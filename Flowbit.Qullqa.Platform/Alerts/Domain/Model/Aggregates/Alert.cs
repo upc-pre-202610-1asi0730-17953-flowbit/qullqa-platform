@@ -1,59 +1,104 @@
-using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Enums;
-using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
-
 namespace Flowbit.Qullqa.Platform.Alerts.Domain.Model.Aggregates;
 
-public class Alert : IAuditableEntity
+public static class AlertType
 {
-    public int Id { get; private set; }
-    public int BusinessId { get; private set; }
-    public int ProductId { get; private set; }
-    public int? BatchId { get; private set; }
-    public string ProductName { get; private set; } = string.Empty;
-    public AlertType Type { get; private set; }
-    public AlertSeverity Severity { get; private set; }
-    public string Message { get; private set; } = string.Empty;
-    public AlertStatus Status { get; private set; } = AlertStatus.Active;
-    public DateTimeOffset Date { get; private set; }
-    public int? CurrentStock { get; private set; }
-    public int? MinStock { get; private set; }
-    public int? DaysToExpiry { get; private set; }
+    public const string LowStock = "LOW_STOCK";
+    public const string OutOfStock = "OUT_OF_STOCK";
+    public const string Expiration = "EXPIRATION";
+    public const string Expired = "EXPIRED";
+}
+
+public static class AlertSeverity
+{
+    public const string High = "HIGH";
+    public const string Medium = "MEDIUM";
+    public const string Low = "LOW";
+}
+
+public static class AlertStatus
+{
+    public const string Active = "ACTIVE";
+    public const string Acknowledged = "ACKNOWLEDGED";
+    public const string Sent = "SENT";
+    public const string Resolved = "RESOLVED";
+}
+
+/// <summary>
+///     A live operational alert (low stock, out of stock, expiring soon, or
+///     expired). Always persisted server-side — unlike the frontend's
+///     original in-memory-only synthesis (`id: null`), this is now the
+///     source of truth (see architecture doc §5.4).
+///
+///     Resolved alerts are pure, immutable history — never recalculated once
+///     RESOLVED (see Resolve()).
+/// </summary>
+public class Alert(
+    int businessId,
+    int productId,
+    int? batchId,
+    string productName,
+    string type,
+    string severity,
+    string message,
+    int currentStock,
+    int minStock,
+    int? daysToExpiry)
+{
+    public Alert() : this(0, 0, null, string.Empty, AlertType.LowStock, AlertSeverity.Low, string.Empty, 0, 0, null)
+    {
+    }
+
+    public int Id { get; }
+    public int BusinessId { get; private set; } = businessId;
+    public int ProductId { get; private set; } = productId;
+    public int? BatchId { get; private set; } = batchId;
+    public string ProductName { get; private set; } = productName;
+    public string Type { get; private set; } = type;
+    public string Severity { get; private set; } = severity;
+    public string Message { get; private set; } = message;
+    public string Status { get; private set; } = AlertStatus.Active;
+    public DateTimeOffset Date { get; private set; } = DateTimeOffset.UtcNow;
+    public int CurrentStock { get; private set; } = currentStock;
+    public int MinStock { get; private set; } = minStock;
+    public int? DaysToExpiry { get; private set; } = daysToExpiry;
     public bool Notified { get; private set; }
     public DateTimeOffset? NotifiedAt { get; private set; }
     public DateTimeOffset? ResolvedAt { get; private set; }
-    public DateTimeOffset? CreatedAt { get; set; }
-    public DateTimeOffset? UpdatedAt { get; set; }
 
-    protected Alert() { }
-
-    public Alert(int businessId, int productId, string productName, AlertType type, AlertSeverity severity,
-        string message, int? batchId = null, int? currentStock = null, int? minStock = null, int? daysToExpiry = null)
+    /// <summary>Refreshes the snapshot fields of a still-ACTIVE alert as stock keeps changing — a no-op once RESOLVED.</summary>
+    public Alert RefreshStockInfo(string severity, string message, int currentStock)
     {
-        BusinessId = businessId;
-        ProductId = productId;
-        ProductName = productName;
-        Type = type;
+        if (Status == AlertStatus.Resolved) return this;
+
         Severity = severity;
         Message = message;
-        BatchId = batchId;
         CurrentStock = currentStock;
-        MinStock = minStock;
-        DaysToExpiry = daysToExpiry;
         Date = DateTimeOffset.UtcNow;
+        return this;
     }
 
-    public void Acknowledge() => Status = AlertStatus.Acknowledged;
-
-    public void MarkNotified()
+    public Alert Acknowledge()
     {
-        Notified = true;
-        NotifiedAt = DateTimeOffset.UtcNow;
-        Status = AlertStatus.Sent;
+        Status = AlertStatus.Acknowledged;
+        return this;
     }
 
-    public void Resolve()
+    public Alert Resolve()
     {
         Status = AlertStatus.Resolved;
         ResolvedAt = DateTimeOffset.UtcNow;
+        return this;
+    }
+
+    /// <summary>
+    ///     Data model only — push/email dispatch itself is out of scope for
+    ///     this version (§8.7). Left here so a future notifier has
+    ///     somewhere to record that it fired.
+    /// </summary>
+    public Alert MarkNotified()
+    {
+        Notified = true;
+        NotifiedAt = DateTimeOffset.UtcNow;
+        return this;
     }
 }

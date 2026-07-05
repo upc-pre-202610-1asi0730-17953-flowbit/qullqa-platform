@@ -7,9 +7,13 @@ namespace Flowbit.Qullqa.Platform.Alerts.Application.Internal.QueryServices;
 
 public class AlertQueryService(IAlertRepository alertRepository) : IAlertQueryService
 {
-    public async Task<Alert?> Handle(GetAlertByIdQuery query, CancellationToken cancellationToken)
-        => await alertRepository.FindByIdAsync(query.Id, cancellationToken);
+    public async Task<IEnumerable<Alert>> Handle(GetActiveAlertsByBusinessIdQuery query, CancellationToken cancellationToken)
+    {
+        return await alertRepository.FindActiveByBusinessIdAsync(query.BusinessId, cancellationToken);
+    }
 
-    public async Task<IEnumerable<Alert>> Handle(GetAlertsByBusinessQuery query, CancellationToken cancellationToken)
-        => await alertRepository.FindByBusinessIdAsync(query.BusinessId, cancellationToken);
+    public async Task<IEnumerable<Alert>> Handle(GetAlertHistoryByBusinessIdQuery query, CancellationToken cancellationToken)
+    {
+        return await alertRepository.FindResolvedByBusinessIdAsync(query.BusinessId, cancellationToken);
+    }
 }

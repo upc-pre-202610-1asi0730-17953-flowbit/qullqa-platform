@@ -5,9 +5,15 @@ namespace Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest.Transform;
 
 public static class PurchaseOrderResourceFromEntityAssembler
 {
-    public static PurchaseOrderResource ToResourceFromEntity(PurchaseOrder o) => new(
-        o.Id, o.BusinessId, o.SupplierId, o.SupplierName, o.Date, o.ExpectedDate, o.ReceivedDate,
-        o.Status, o.Currency, o.Description,
-        o.Details.Select(d => new PurchaseOrderDetailResource(d.Id, d.PurchaseOrderId, d.ProductId, d.ProductName,
-            d.Quantity, d.UnitPrice, d.Discount, d.LineTotal, d.DeliveryStatus, d.DeliveryTrackingNumber)));
+    public static PurchaseOrderResource ToResourceFromEntity(PurchaseOrder purchaseOrder)
+    {
+        var details = purchaseOrder.Details
+            .Select(detail => new PurchaseOrderDetailResource(detail.Id, detail.PurchaseId, detail.ProductId, detail.Quantity,
+                detail.UnitPrice, detail.Discount, detail.Subtotal, detail.DeliveryStatus, detail.DeliveryTrackingNum))
+            .ToList();
+
+        return new PurchaseOrderResource(purchaseOrder.Id, purchaseOrder.BusinessId, purchaseOrder.SupplierId,
+            purchaseOrder.Date, purchaseOrder.ExpectedDate, purchaseOrder.ReceivedDate, purchaseOrder.Status,
+            purchaseOrder.Currency, purchaseOrder.Description, details);
+    }
 }

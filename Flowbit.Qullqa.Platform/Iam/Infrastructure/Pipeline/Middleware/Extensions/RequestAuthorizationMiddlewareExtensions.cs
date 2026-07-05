@@ -4,6 +4,8 @@ namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Extensi
 
 public static class RequestAuthorizationMiddlewareExtensions
 {
-    public static IApplicationBuilder UseRequestAuthorization(this IApplicationBuilder builder)
-        => builder.UseMiddleware<RequestAuthorizationMiddleware>();
+    public static IApplicationBuilder UseRequestAuthorization(this IApplicationBuilder app)
+    {
+        return app.UseMiddleware<RequestAuthorizationMiddleware>();
+    }
 }

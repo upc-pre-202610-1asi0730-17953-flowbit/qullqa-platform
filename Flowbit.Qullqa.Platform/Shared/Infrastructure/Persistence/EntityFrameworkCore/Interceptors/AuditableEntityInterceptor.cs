@@ -4,31 +4,44 @@ using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
 
 namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Interceptors;
 
-public sealed class AuditableEntityInterceptor : SaveChangesInterceptor
+/// <summary>
+///     Stamps CreatedAt/UpdatedAt on every entity implementing IAuditableEntity
+///     right before SaveChanges persists it, so timestamps are always
+///     server-generated and never trusted from client input.
+/// </summary>
+public class AuditableEntityInterceptor : SaveChangesInterceptor
 {
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
-        ApplyAuditTimestamps(eventData.Context);
+        UpdateAuditableEntities(eventData.Context);
         return base.SavingChanges(eventData, result);
     }
 
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(
-        DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+        DbContextEventData eventData,
+        InterceptionResult<int> result,
+        CancellationToken cancellationToken = default)
     {
-        ApplyAuditTimestamps(eventData.Context);
+        UpdateAuditableEntities(eventData.Context);
         return base.SavingChangesAsync(eventData, result, cancellationToken);
     }
 
-    private static void ApplyAuditTimestamps(DbContext? context)
+    private static void UpdateAuditableEntities(DbContext? context)
     {
-        if (context is null) return;
+        if (context == null) return;
+
         var now = DateTimeOffset.UtcNow;
         foreach (var entry in context.ChangeTracker.Entries<IAuditableEntity>())
         {
-            if (entry.State is EntityState.Added or EntityState.Modified)
-                entry.Property(nameof(IAuditableEntity.UpdatedAt)).CurrentValue = now;
             if (entry.State == EntityState.Added)
-                entry.Property(nameof(IAuditableEntity.CreatedAt)).CurrentValue ??= now;
+            {
+                entry.Entity.CreatedAt = now;
+                entry.Entity.UpdatedAt = now;
+            }
+            else if (entry.State == EntityState.Modified)
+            {
+                entry.Entity.UpdatedAt = now;
+            }
         }
     }
 }

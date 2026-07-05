@@ -1,34 +1,71 @@
-using Flowbit.Qullqa.Platform.Sales.Domain.Model.Enums;
-using Flowbit.Qullqa.Platform.Shared.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Sales.Domain.Model.Entities;
 
 namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates;
 
-public class Sale : IAuditableEntity
+public static class SaleStatus
 {
-    public Sale() { Details = new List<SaleDetail>(); }
-    public Sale(int businessId, int? customerId, string description, string currency)
+    public const string Paid = "PAID";
+    public const string Cancelled = "CANCELLED";
+
+    // No OPEN/cart status: the current POS flow always creates a fully paid
+    // sale at checkout (stock is validated and decremented atomically with
+    // creation) — add it back only if a hold-cart feature is ever built.
+}
+
+/// <summary>
+///     The sale aggregate. TotalAmount is always the server-computed sum of
+///     its lines' subtotals — never trust a total sent by the client.
+/// </summary>
+public class Sale
+{
+    private readonly List<SaleDetail> _saleDetails = [];
+
+    public Sale(int businessId, int? customerId, string paymentMethod, string currency, string description)
     {
-        BusinessId = businessId; CustomerId = customerId; Description = description; Currency = currency;
-        Status = SaleStatus.Open; Date = DateTimeOffset.UtcNow; Details = new List<SaleDetail>();
+        BusinessId = businessId;
+        CustomerId = customerId;
+        PaymentMethod = paymentMethod;
+        Currency = currency;
+        Description = description;
+        Status = SaleStatus.Paid;
+        Date = DateTimeOffset.UtcNow;
     }
 
-    public int Id { get; private set; }
+    public Sale()
+    {
+        PaymentMethod = string.Empty;
+        Currency = string.Empty;
+        Description = string.Empty;
+        Status = SaleStatus.Paid;
+    }
+
+    public int Id { get; }
     public int BusinessId { get; private set; }
     public int? CustomerId { get; private set; }
-    public SaleStatus Status { get; private set; } = SaleStatus.Open;
+    public string Status { get; private set; }
     public decimal TotalAmount { get; private set; }
-    public PaymentMethod? PaymentMethod { get; private set; }
+    public string PaymentMethod { get; private set; }
     public DateTimeOffset Date { get; private set; }
-    public string Description { get; private set; } = string.Empty;
-    public string Currency { get; private set; } = "PEN";
-    public ICollection<SaleDetail> Details { get; private set; }
-    public DateTimeOffset? CreatedAt { get; private set; }
-    public DateTimeOffset? UpdatedAt { get; private set; }
+    public string Description { get; private set; }
+    public string Currency { get; private set; }
 
-    public Sale Pay(PaymentMethod paymentMethod, decimal totalAmount)
+    public IReadOnlyCollection<SaleDetail> SaleDetails => _saleDetails.AsReadOnly();
+
+    public Sale AddLine(int productId, int quantity, decimal unitPrice, decimal discount)
     {
-        Status = SaleStatus.Paid; PaymentMethod = paymentMethod; TotalAmount = totalAmount; return this;
+        _saleDetails.Add(new SaleDetail(Id, productId, quantity, unitPrice, discount));
+        RecalculateTotal();
+        return this;
     }
 
-    public Sale Cancel() { Status = SaleStatus.Cancelled; return this; }
+    private void RecalculateTotal()
+    {
+        TotalAmount = _saleDetails.Sum(detail => detail.Subtotal);
+    }
+
+    public Sale Cancel()
+    {
+        Status = SaleStatus.Cancelled;
+        return this;
+    }
 }

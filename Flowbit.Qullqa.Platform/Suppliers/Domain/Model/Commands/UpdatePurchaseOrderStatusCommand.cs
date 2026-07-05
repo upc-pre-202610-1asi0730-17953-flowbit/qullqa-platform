@@ -1,5 +1,4 @@
-using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Enums;
-
 namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Commands;
 
-public record UpdatePurchaseOrderStatusCommand(int Id, PurchaseOrderStatus Status);
+/// <summary>Status must be one of PurchaseOrderStatus (PENDING is never a valid target — orders start there).</summary>
+public record UpdatePurchaseOrderStatusCommand(int PurchaseOrderId, string Status);

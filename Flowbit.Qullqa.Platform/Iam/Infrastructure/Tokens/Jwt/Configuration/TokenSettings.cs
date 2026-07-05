@@ -2,5 +2,6 @@ namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Tokens.Jwt.Configuration;
 
 public class TokenSettings
 {
-    public required string Secret { get; set; }
+    public string Secret { get; set; } = string.Empty;
+    public int ExpirationDays { get; set; } = 7;
 }

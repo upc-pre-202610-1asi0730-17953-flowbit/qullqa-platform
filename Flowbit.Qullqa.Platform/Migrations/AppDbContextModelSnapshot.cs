@@ -34,11 +34,7 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("int")
                         .HasColumnName("business_id");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
-                    b.Property<int?>("CurrentStock")
+                    b.Property<int>("CurrentStock")
                         .HasColumnType("int")
                         .HasColumnName("current_stock");
 
@@ -52,11 +48,11 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("varchar(1000)")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("message");
 
-                    b.Property<int?>("MinStock")
+                    b.Property<int>("MinStock")
                         .HasColumnType("int")
                         .HasColumnName("min_stock");
 
@@ -74,8 +70,8 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("product_name");
 
                     b.Property<DateTimeOffset?>("ResolvedAt")
@@ -84,75 +80,73 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Severity")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("severity");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("status");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("type");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
-                        .HasName("p_k_alerts");
+                        .HasName("pk_alerts");
+
+                    b.HasIndex("BatchId")
+                        .HasDatabaseName("ix_alerts_batch_id");
+
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_alerts_business_id");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_alerts_product_id");
 
                     b.ToTable("alerts");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Dashboard.Domain.Model.Aggregates.MetricsSnapshot", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Alerts.Domain.Model.Entities.AlertRule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
 
+                    b.Property<string>("AlertType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("alert_type");
+
                     b.Property<int>("BusinessId")
                         .HasColumnType("int")
                         .HasColumnName("business_id");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("enabled");
 
-                    b.Property<DateTimeOffset>("Date")
-                        .HasColumnType("datetime")
-                        .HasColumnName("date");
-
-                    b.Property<int>("LowStockCount")
+                    b.Property<int>("ThresholdValue")
                         .HasColumnType("int")
-                        .HasColumnName("low_stock_count");
-
-                    b.Property<int>("TotalProducts")
-                        .HasColumnType("int")
-                        .HasColumnName("total_products");
-
-                    b.Property<decimal>("TotalRevenue")
-                        .HasColumnType("decimal(14,2)")
-                        .HasColumnName("total_revenue");
-
-                    b.Property<int>("TotalSales")
-                        .HasColumnType("int")
-                        .HasColumnName("total_sales");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("threshold_value");
 
                     b.HasKey("Id")
-                        .HasName("p_k_metrics_snapshots");
+                        .HasName("pk_alert_rules");
 
-                    b.ToTable("metrics_snapshots");
+                    b.HasIndex("BusinessId", "AlertType")
+                        .IsUnique()
+                        .HasDatabaseName("ix_alert_rules_business_id_alert_type");
+
+                    b.ToTable("alert_rules");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Dashboard.Domain.Model.Aggregates.Report", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Dashboard.Domain.Model.Entities.Report", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -163,15 +157,13 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("int")
                         .HasColumnName("business_id");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
+                    b.Property<DateTime?>("DateFrom")
+                        .HasColumnType("date")
+                        .HasColumnName("date_from");
 
-                    b.Property<string>("Filters")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("varchar(2000)")
-                        .HasColumnName("filters");
+                    b.Property<DateTime?>("DateTo")
+                        .HasColumnType("date")
+                        .HasColumnName("date_to");
 
                     b.Property<DateTimeOffset>("GeneratedAt")
                         .HasColumnType("datetime")
@@ -179,20 +171,20 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("type");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
-                        .HasName("p_k_reports");
+                        .HasName("pk_reports");
+
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_reports_business_id");
 
                     b.ToTable("reports");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Delivery", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Deliveries.Domain.Model.Aggregates.Delivery", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -207,34 +199,21 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("completed_at");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
                     b.Property<string>("CurrentLabel")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("current_label");
-
-                    b.Property<double?>("CurrentLatitude")
-                        .HasColumnType("double")
-                        .HasColumnName("current_latitude");
-
-                    b.Property<double?>("CurrentLongitude")
-                        .HasColumnType("double")
-                        .HasColumnName("current_longitude");
 
                     b.Property<string>("Destination")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("destination");
 
                     b.Property<string>("DriverName")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("driver_name");
 
                     b.Property<string>("DriverPhone")
@@ -243,7 +222,7 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("varchar(20)")
                         .HasColumnName("driver_phone");
 
-                    b.Property<DateTimeOffset?>("EstimatedArrival")
+                    b.Property<DateTimeOffset>("EstimatedArrival")
                         .HasColumnType("datetime")
                         .HasColumnName("estimated_arrival");
 
@@ -253,10 +232,16 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("varchar(20)")
                         .HasColumnName("license_plate");
 
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("order_id");
+
                     b.Property<string>("Origin")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("origin");
 
                     b.Property<int?>("PurchaseDetailId")
@@ -269,28 +254,31 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("status");
 
                     b.Property<string>("SupplierName")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("supplier_name");
 
-                    b.Property<decimal>("TotalWeight")
-                        .HasColumnType("decimal(10,3)")
-                        .HasColumnName("total_weight");
+                    b.Property<string>("TotalWeightUnit")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("total_weight_unit");
+
+                    b.Property<decimal>("TotalWeightValue")
+                        .HasColumnType("decimal(10,2)")
+                        .HasColumnName("total_weight_value");
 
                     b.Property<string>("TrackingNumber")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
                         .HasColumnName("tracking_number");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
 
                     b.Property<string>("Vehicle")
                         .IsRequired()
@@ -299,65 +287,57 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnName("vehicle");
 
                     b.HasKey("Id")
-                        .HasName("p_k_deliveries");
+                        .HasName("pk_deliveries");
 
-                    b.HasIndex("TrackingNumber")
-                        .IsUnique()
-                        .HasDatabaseName("i_x_deliveries_tracking_number");
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_deliveries_business_id");
+
+                    b.HasIndex("PurchaseDetailId")
+                        .HasDatabaseName("ix_deliveries_purchase_detail_id");
 
                     b.ToTable("deliveries");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Waypoint", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Deliveries.Domain.Model.Entities.Waypoint", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
                     b.Property<int>("DeliveryId")
                         .HasColumnType("int")
                         .HasColumnName("delivery_id");
 
+                    b.Property<string>("District")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("district");
+
                     b.Property<string>("Label")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("label");
-
-                    b.Property<double>("Latitude")
-                        .HasColumnType("double")
-                        .HasColumnName("latitude");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("double")
-                        .HasColumnName("longitude");
 
                     b.Property<bool>("Reached")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("reached");
 
-                    b.Property<DateTimeOffset?>("ReachedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("reached_at");
-
                     b.Property<int>("SequenceOrder")
                         .HasColumnType("int")
                         .HasColumnName("sequence_order");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
+                    b.Property<DateTimeOffset?>("Timestamp")
                         .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
+                        .HasColumnName("timestamp");
 
                     b.HasKey("Id")
-                        .HasName("p_k_waypoints");
+                        .HasName("pk_waypoints");
 
                     b.HasIndex("DeliveryId")
-                        .HasDatabaseName("i_x_waypoints_delivery_id");
+                        .HasDatabaseName("ix_waypoints_delivery_id");
 
                     b.ToTable("waypoints");
                 });
@@ -371,147 +351,46 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("address");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("email");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("name");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("phone");
+                    b.Property<int>("PlanId")
+                        .HasColumnType("int")
+                        .HasColumnName("plan_id");
 
                     b.Property<string>("Ruc")
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("ruc");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("type");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("p_k_businesses");
+                        .HasName("pk_businesses");
 
-                    b.HasIndex("Ruc")
-                        .IsUnique()
-                        .HasDatabaseName("i_x_businesses_ruc");
+                    b.HasIndex("PlanId")
+                        .HasDatabaseName("ix_businesses_plan_id");
 
                     b.ToTable("businesses");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("description");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("name");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("p_k_roles");
-
-                    b.ToTable("roles");
-                });
-
             modelBuilder.Entity("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<int?>("BusinessId")
-                        .HasColumnType("int")
-                        .HasColumnName("business_id");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("email");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("first_name");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("last_name");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("password_hash");
-
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("int")
-                        .HasColumnName("role_id");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("status");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("p_k_users");
-
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasDatabaseName("i_x_users_email");
-
-                    b.ToTable("users");
-                });
-
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates.InventoryItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -522,37 +401,98 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("int")
                         .HasColumnName("business_id");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("email");
 
-                    b.Property<int>("CurrentStock")
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("last_name");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("password_hash");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("phone");
+
+                    b.Property<int>("RoleId")
                         .HasColumnType("int")
-                        .HasColumnName("current_stock");
+                        .HasColumnName("role_id");
 
-                    b.Property<int>("MinimumStock")
-                        .HasColumnType("int")
-                        .HasColumnName("minimum_stock");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
-                    b.Property<int>("WarehouseId")
-                        .HasColumnType("int")
-                        .HasColumnName("warehouse_id");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
 
                     b.HasKey("Id")
-                        .HasName("p_k_inventory_items");
+                        .HasName("pk_users");
 
-                    b.ToTable("inventory_items");
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_users_business_id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_email");
+
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_users_role_id");
+
+                    b.ToTable("users");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates.Product", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Iam.Domain.Model.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("position");
+
+                    b.HasKey("Id")
+                        .HasName("pk_roles");
+
+                    b.ToTable("roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Position = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Position = "CASHIER"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Position = "WAREHOUSE"
+                        });
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -569,12 +509,9 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Category")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
                         .HasColumnName("category");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -584,26 +521,76 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("name");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("status");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
-                        .HasName("p_k_products");
+                        .HasName("pk_products");
+
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_products_business_id");
 
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates.StockMovement", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Warehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("address");
+
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int")
+                        .HasColumnName("business_id");
+
+                    b.Property<string>("Capacity")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("capacity");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("code");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_warehouses");
+
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_warehouses_business_id");
+
+                    b.ToTable("warehouses");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Entities.Batch", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -614,9 +601,103 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("int")
                         .HasColumnName("business_id");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
+                    b.Property<DateTime?>("Expiration")
+                        .HasColumnType("date")
+                        .HasColumnName("expiration");
+
+                    b.Property<int?>("InventoryId")
+                        .HasColumnType("int")
+                        .HasColumnName("inventory_id");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("product_id");
+
+                    b.Property<decimal>("PurchasePrice")
+                        .HasColumnType("decimal(10,2)")
+                        .HasColumnName("purchase_price");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_batches");
+
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_batches_business_id");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_batches_product_id");
+
+                    b.ToTable("batches");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Entities.InventoryItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int")
+                        .HasColumnName("business_id");
+
+                    b.Property<int>("MinimumStock")
+                        .HasColumnType("int")
+                        .HasColumnName("minimum_stock");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("product_id");
+
+                    b.Property<int>("StockUnit")
+                        .HasColumnType("int")
+                        .HasColumnName("stock_unit");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime")
-                        .HasColumnName("created_at");
+                        .HasColumnName("updated_at");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int")
+                        .HasColumnName("warehouse_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_inventory_items");
+
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_inventory_items_business_id");
+
+                    b.HasIndex("WarehouseId")
+                        .HasDatabaseName("ix_inventory_items_warehouse_id");
+
+                    b.HasIndex("ProductId", "WarehouseId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_inventory_items_product_id_warehouse_id");
+
+                    b.ToTable("inventory_items");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Entities.StockMovement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int")
+                        .HasColumnName("business_id");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("note");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int")
@@ -630,52 +711,35 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("registered_at");
 
+                    b.Property<string>("Supplier")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("supplier");
+
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("type");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("p_k_stock_movements");
-
-                    b.ToTable("stock_movements");
-                });
-
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Product.Domain.Model.Aggregates.WarehouseStock", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("int")
-                        .HasColumnName("stock");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
 
                     b.Property<int>("WarehouseId")
                         .HasColumnType("int")
                         .HasColumnName("warehouse_id");
 
                     b.HasKey("Id")
-                        .HasName("p_k_warehouse_stocks");
+                        .HasName("pk_stock_movements");
 
-                    b.ToTable("warehouse_stocks");
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_stock_movements_business_id");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_stock_movements_product_id");
+
+                    b.HasIndex("WarehouseId")
+                        .HasDatabaseName("ix_stock_movements_warehouse_id");
+
+                    b.ToTable("stock_movements");
                 });
 
             modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Customer", b =>
@@ -689,20 +753,22 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("int")
                         .HasColumnName("business_id");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
                     b.Property<string>("DocumentNumber")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)")
                         .HasColumnName("document_number");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
+                        .HasColumnName("email");
+
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("full_name");
 
                     b.Property<string>("PhoneNumber")
@@ -715,12 +781,11 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("registered_at");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
-                        .HasName("p_k_customers");
+                        .HasName("pk_customers");
+
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_customers_business_id");
 
                     b.ToTable("customers");
                 });
@@ -735,10 +800,6 @@ namespace Flowbit.Qullqa.Platform.Migrations
                     b.Property<int>("BusinessId")
                         .HasColumnType("int")
                         .HasColumnName("business_id");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
 
                     b.Property<string>("Currency")
                         .IsRequired()
@@ -761,41 +822,42 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnName("description");
 
                     b.Property<string>("PaymentMethod")
-                        .HasColumnType("longtext")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
                         .HasColumnName("payment_method");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("status");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(10,2)")
                         .HasColumnName("total_amount");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
-                        .HasName("p_k_sales");
+                        .HasName("pk_sales");
+
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_sales_business_id");
+
+                    b.HasIndex("CustomerId")
+                        .HasDatabaseName("ix_sales_customer_id");
 
                     b.ToTable("sales");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.SaleDetail", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Entities.SaleDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
                     b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(10,2)")
+                        .HasColumnType("decimal(5,4)")
                         .HasColumnName("discount");
 
                     b.Property<int>("ProductId")
@@ -814,17 +876,103 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("decimal(10,2)")
                         .HasColumnName("unit_price");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
-                        .HasName("p_k_sale_details");
+                        .HasName("pk_sale_details");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_sale_details_product_id");
 
                     b.HasIndex("SaleId")
-                        .HasDatabaseName("i_x_sale_details_sale_id");
+                        .HasDatabaseName("ix_sale_details_sale_id");
 
                     b.ToTable("sale_details");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates.Plan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("currency");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Features")
+                        .IsRequired()
+                        .HasColumnType("json")
+                        .HasColumnName("features");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("name");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(10,2)")
+                        .HasColumnName("price");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("status");
+
+                    b.Property<string>("TimeLength")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("time_length");
+
+                    b.HasKey("Id")
+                        .HasName("pk_plans");
+
+                    b.ToTable("plans");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Currency = "PEN",
+                            Description = "Ideal para pequeñas bodegas y farmacias",
+                            Features = "[\"Inventario básico\",\"Ventas POS\",\"1 almacén\",\"Hasta 100 productos\"]",
+                            Name = "Plan Básico",
+                            Price = 19.9m,
+                            Status = "ACTIVE",
+                            TimeLength = "MONTHLY"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Currency = "PEN",
+                            Description = "Para negocios en crecimiento",
+                            Features = "[\"Todo el Plan Básico\",\"Alertas inteligentes\",\"3 almacenes\",\"Proveedores ilimitados\",\"Reportes avanzados\",\"Tracking IoT\"]",
+                            Name = "Plan Pro",
+                            Price = 49.9m,
+                            Status = "ACTIVE",
+                            TimeLength = "MONTHLY"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Currency = "PEN",
+                            Description = "Para cadenas de tiendas y farmacias",
+                            Features = "[\"Todo el Plan Pro\",\"Almacenes ilimitados\",\"Soporte prioritario\",\"API dedicada\",\"Multi-negocio\"]",
+                            Name = "Plan Enterprise",
+                            Price = 99.9m,
+                            Status = "ACTIVE",
+                            TimeLength = "MONTHLY"
+                        });
                 });
 
             modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", b =>
@@ -838,18 +986,14 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("int")
                         .HasColumnName("business_id");
 
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
                     b.Property<string>("Currency")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)")
                         .HasColumnName("currency");
 
-                    b.Property<DateTimeOffset>("Date")
-                        .HasColumnType("datetime")
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date")
                         .HasColumnName("date");
 
                     b.Property<string>("Description")
@@ -858,98 +1002,34 @@ namespace Flowbit.Qullqa.Platform.Migrations
                         .HasColumnType("varchar(500)")
                         .HasColumnName("description");
 
-                    b.Property<DateTimeOffset?>("ExpectedDate")
-                        .HasColumnType("datetime")
+                    b.Property<DateTime?>("ExpectedDate")
+                        .HasColumnType("date")
                         .HasColumnName("expected_date");
 
-                    b.Property<DateTimeOffset?>("ReceivedDate")
-                        .HasColumnType("datetime")
+                    b.Property<DateTime?>("ReceivedDate")
+                        .HasColumnType("date")
                         .HasColumnName("received_date");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("status");
 
                     b.Property<int>("SupplierId")
                         .HasColumnType("int")
                         .HasColumnName("supplier_id");
 
-                    b.Property<string>("SupplierName")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
-                        .HasColumnName("supplier_name");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
-                        .HasName("p_k_purchase_orders");
+                        .HasName("pk_purchase_orders");
+
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_purchase_orders_business_id");
+
+                    b.HasIndex("SupplierId")
+                        .HasDatabaseName("ix_purchase_orders_supplier_id");
 
                     b.ToTable("purchase_orders");
-                });
-
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("DeliveryStatus")
-                        .IsRequired()
-                        .HasColumnType("longtext")
-                        .HasColumnName("delivery_status");
-
-                    b.Property<string>("DeliveryTrackingNumber")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("delivery_tracking_number");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(10,2)")
-                        .HasColumnName("discount");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
-                        .HasColumnName("product_name");
-
-                    b.Property<int>("PurchaseOrderId")
-                        .HasColumnType("int")
-                        .HasColumnName("purchase_order_id");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasColumnName("quantity");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(10,2)")
-                        .HasColumnName("unit_price");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("p_k_purchase_order_details");
-
-                    b.HasIndex("PurchaseOrderId")
-                        .HasDatabaseName("i_x_purchase_order_details_purchase_order_id");
-
-                    b.ToTable("purchase_order_details");
                 });
 
             modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.Supplier", b =>
@@ -961,8 +1041,8 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("address");
 
                     b.Property<int>("BusinessId")
@@ -971,35 +1051,32 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Category")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
                         .HasColumnName("category");
 
                     b.Property<string>("ContactPerson")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("contact_person");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("email");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("last_name");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)")
                         .HasColumnName("name");
 
                     b.Property<string>("Phone")
@@ -1010,71 +1087,409 @@ namespace Flowbit.Qullqa.Platform.Migrations
 
                     b.Property<string>("Ruc")
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("ruc");
 
-                    b.Property<DateTimeOffset>("Since")
-                        .HasColumnType("datetime")
+                    b.Property<DateTime>("Since")
+                        .HasColumnType("date")
                         .HasColumnName("since");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("status");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
-                        .HasName("p_k_suppliers");
+                        .HasName("pk_suppliers");
 
-                    b.HasIndex("Ruc")
-                        .IsUnique()
-                        .HasDatabaseName("i_x_suppliers_ruc");
+                    b.HasIndex("BusinessId")
+                        .HasDatabaseName("ix_suppliers_business_id");
 
                     b.ToTable("suppliers");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Waypoint", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Entities.PurchaseOrderDetail", b =>
                 {
-                    b.HasOne("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Delivery", null)
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("DeliveryStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("delivery_status");
+
+                    b.Property<string>("DeliveryTrackingNum")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("delivery_tracking_num");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(5,4)")
+                        .HasColumnName("discount");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("product_id");
+
+                    b.Property<int>("PurchaseId")
+                        .HasColumnType("int")
+                        .HasColumnName("purchase_id");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int")
+                        .HasColumnName("quantity");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(10,2)")
+                        .HasColumnName("unit_price");
+
+                    b.HasKey("Id")
+                        .HasName("pk_purchase_order_details");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_purchase_order_details_product_id");
+
+                    b.HasIndex("PurchaseId")
+                        .HasDatabaseName("ix_purchase_order_details_purchase_id");
+
+                    b.ToTable("purchase_order_details");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Alerts.Domain.Model.Aggregates.Alert", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Products.Domain.Model.Entities.Batch", null)
+                        .WithMany()
+                        .HasForeignKey("BatchId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_alerts_batch_batch_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_alerts_business_business_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_alerts_product_product_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Alerts.Domain.Model.Entities.AlertRule", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_alert_rules_business_business_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Dashboard.Domain.Model.Entities.Report", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_reports_business_business_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Deliveries.Domain.Model.Aggregates.Delivery", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_deliveries_business_business_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Entities.PurchaseOrderDetail", null)
+                        .WithMany()
+                        .HasForeignKey("PurchaseDetailId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_deliveries_purchase_order_detail_purchase_detail_id");
+
+                    b.OwnsOne("Flowbit.Qullqa.Platform.Deliveries.Domain.Model.ValueObjects.GeoCoordinate", "CurrentLocation", b1 =>
+                        {
+                            b1.Property<int>("DeliveryId")
+                                .HasColumnType("int")
+                                .HasColumnName("delivery_id");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double")
+                                .HasColumnName("latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double")
+                                .HasColumnName("longitude");
+
+                            b1.HasKey("DeliveryId")
+                                .HasName("pk_delivery_current_locations");
+
+                            b1.ToTable("delivery_current_locations", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("DeliveryId")
+                                .HasConstraintName("fk_delivery_current_locations_deliveries_delivery_id");
+                        });
+
+                    b.Navigation("CurrentLocation");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Deliveries.Domain.Model.Entities.Waypoint", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Deliveries.Domain.Model.Aggregates.Delivery", null)
                         .WithMany("Waypoints")
                         .HasForeignKey("DeliveryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("f_k_waypoints_deliveries_delivery_id");
+                        .HasConstraintName("fk_waypoints_deliveries_delivery_id");
+
+                    b.OwnsOne("Flowbit.Qullqa.Platform.Deliveries.Domain.Model.ValueObjects.GeoCoordinate", "Location", b1 =>
+                        {
+                            b1.Property<int>("WaypointId")
+                                .HasColumnType("int")
+                                .HasColumnName("waypoint_id");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double")
+                                .HasColumnName("latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double")
+                                .HasColumnName("longitude");
+
+                            b1.HasKey("WaypointId")
+                                .HasName("pk_waypoint_locations");
+
+                            b1.ToTable("waypoint_locations", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("WaypointId")
+                                .HasConstraintName("fk_waypoint_locations_waypoints_waypoint_id");
+                        });
+
+                    b.Navigation("Location")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.SaleDetail", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", b =>
                 {
+                    b.HasOne("Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates.Plan", null)
+                        .WithMany()
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_businesses_plan_plan_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.User", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_users_businesses_business_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_users_role_role_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Product", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_products_businesses_business_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Warehouse", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_warehouses_businesses_business_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Entities.Batch", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_batches_businesses_business_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_batches_products_product_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Entities.InventoryItem", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_inventory_items_businesses_business_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_inventory_items_products_product_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Warehouse", null)
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_inventory_items_warehouses_warehouse_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Products.Domain.Model.Entities.StockMovement", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_stock_movements_businesses_business_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_stock_movements_products_product_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Warehouse", null)
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_stock_movements_warehouses_warehouse_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Customer", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_customers_businesses_business_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Sale", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_sales_businesses_business_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Customer", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_sales_customers_customer_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Entities.SaleDetail", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_sale_details_products_product_id");
+
                     b.HasOne("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Sale", null)
-                        .WithMany("Details")
+                        .WithMany("SaleDetails")
                         .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("f_k_sale_details_sales_sale_id");
+                        .HasConstraintName("fk_sale_details_sales_sale_id");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrderDetail", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", b =>
                 {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_orders_businesses_business_id");
+
+                    b.HasOne("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.Supplier", null)
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_orders_supplier_supplier_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.Supplier", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates.Business", null)
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_suppliers_businesses_business_id");
+                });
+
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Entities.PurchaseOrderDetail", b =>
+                {
+                    b.HasOne("Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_order_details_products_product_id");
+
                     b.HasOne("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", null)
                         .WithMany("Details")
-                        .HasForeignKey("PurchaseOrderId")
+                        .HasForeignKey("PurchaseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("f_k_purchase_order_details_purchase_orders_purchase_order_id");
+                        .HasConstraintName("fk_purchase_order_details_purchase_orders_purchase_id");
                 });
 
-            modelBuilder.Entity("Flowbit.Qullqa.Platform.Delivery.Domain.Model.Aggregates.Delivery", b =>
+            modelBuilder.Entity("Flowbit.Qullqa.Platform.Deliveries.Domain.Model.Aggregates.Delivery", b =>
                 {
                     b.Navigation("Waypoints");
                 });
 
             modelBuilder.Entity("Flowbit.Qullqa.Platform.Sales.Domain.Model.Aggregates.Sale", b =>
                 {
-                    b.Navigation("Details");
+                    b.Navigation("SaleDetails");
                 });
 
             modelBuilder.Entity("Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates.PurchaseOrder", b =>

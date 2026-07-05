@@ -1,3 +1,3 @@
 namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Queries;
 
-public record GetSaleByIdQuery(int Id);
+public record GetSaleByIdQuery(int SaleId);

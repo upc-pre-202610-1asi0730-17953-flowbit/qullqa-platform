@@ -1,3 +1,3 @@
 namespace Flowbit.Qullqa.Platform.Iam.Interfaces.Rest.Resources;
 
-public record RoleResource(int Id, string Position, string Description);
+public record RoleResource(int Id, string Position);

@@ -5,6 +5,5 @@ namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
 
 public interface ISupplierRepository : IBaseRepository<Supplier>
 {
-    Task<IEnumerable<Supplier>> FindByBusinessIdAsync(int businessId, CancellationToken cancellationToken);
-    Task<bool> ExistsByRucAsync(string ruc, CancellationToken cancellationToken);
+    Task<IEnumerable<Supplier>> FindAllByBusinessIdAsync(int businessId, CancellationToken cancellationToken = default);
 }

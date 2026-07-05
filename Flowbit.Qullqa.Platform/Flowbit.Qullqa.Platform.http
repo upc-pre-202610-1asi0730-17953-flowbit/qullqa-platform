@@ -1,4 +1,4 @@
-@Flowbit.Qullqa.Platform_HostAddress = http://localhost:5062
+@Flowbit.Qullqa.Platform_HostAddress = http://localhost:5073
 
 GET {{Flowbit.Qullqa.Platform_HostAddress}}/weatherforecast/
 Accept: application/json
