@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Products.Domain.Model.Entities;
+namespace Flowbit.Qullqa.Platform.Products.Domain.Model.Entities;
 
 public static class StockMovementType
 {
