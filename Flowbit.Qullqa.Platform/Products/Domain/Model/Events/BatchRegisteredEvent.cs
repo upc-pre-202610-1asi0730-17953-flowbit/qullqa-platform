@@ -1,6 +1,6 @@
-using Qullqa.Platform.v2.Shared.Domain.Model.Events;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Events;
 
-namespace Qullqa.Platform.v2.Products.Domain.Model.Events;
+namespace Flowbit.Qullqa.Platform.Products.Domain.Model.Events;
 
 /// <summary>
 ///     Raised whenever a batch is created or updated (expiration date set).
