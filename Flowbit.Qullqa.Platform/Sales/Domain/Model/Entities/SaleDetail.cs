@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Sales.Domain.Model.Entities;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Entities;
 
 /// <summary>
 ///     A single line of a sale. Lives inside the Sale aggregate boundary —
