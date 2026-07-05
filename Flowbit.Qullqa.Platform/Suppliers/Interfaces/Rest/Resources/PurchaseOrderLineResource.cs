@@ -1,3 +1,3 @@
-namespace Qullqa.Platform.v2.Suppliers.Interfaces.Rest.Resources;
+namespace Flowbit.Qullqa.Platform.Suppliers.Interfaces.Rest.Resources;
 
 public record PurchaseOrderLineResource(int ProductId, int Quantity, decimal UnitPrice, decimal Discount);
