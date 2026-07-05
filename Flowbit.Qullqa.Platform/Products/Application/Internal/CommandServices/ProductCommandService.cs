@@ -1,16 +1,16 @@
 using Cortex.Mediator;
 using Microsoft.Extensions.Localization;
-using Qullqa.Platform.v2.Products.Application.CommandServices;
-using Qullqa.Platform.v2.Products.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Products.Domain.Model.Commands;
-using Qullqa.Platform.v2.Products.Domain.Model.Errors;
-using Qullqa.Platform.v2.Products.Domain.Model.Events;
-using Qullqa.Platform.v2.Products.Domain.Repositories;
-using Qullqa.Platform.v2.Products.Resources;
-using Qullqa.Platform.v2.Shared.Application.Model;
-using Qullqa.Platform.v2.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Products.Application.CommandServices;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Errors;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Events;
+using Flowbit.Qullqa.Platform.Products.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Products.Resources;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
 
-namespace Qullqa.Platform.v2.Products.Application.Internal.CommandServices;
+namespace Flowbit.Qullqa.Platform.Products.Application.Internal.CommandServices;
 
 public class ProductCommandService(
     IProductRepository productRepository,
