@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Shared.Domain.Model.Services;
+namespace Flowbit.Qullqa.Platform.Shared.Domain.Model.Services;
 
 /// <summary>
 ///     Stock-level business rules shared by Product (InventoryItem) and
