@@ -7,7 +7,5 @@ namespace Flowbit.Qullqa.Platform.Sales.Application.CommandServices;
 public interface ISaleCommandService
 {
     Task<Result<Sale>> Handle(CreateSaleCommand command, CancellationToken cancellationToken);
-    Task<Result<Sale>> Handle(AddSaleDetailCommand command, CancellationToken cancellationToken);
-    Task<Result<Sale>> Handle(PaySaleCommand command, CancellationToken cancellationToken);
-    Task<Result<Sale>> Handle(CancelSaleCommand command, CancellationToken cancellationToken);
+    Task<Result<Sale>> Handle(UpdateSaleStatusCommand command, CancellationToken cancellationToken);
 }

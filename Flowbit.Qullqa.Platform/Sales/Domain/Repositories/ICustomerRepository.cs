@@ -5,5 +5,5 @@ namespace Flowbit.Qullqa.Platform.Sales.Domain.Repositories;
 
 public interface ICustomerRepository : IBaseRepository<Customer>
 {
-    Task<IEnumerable<Customer>> FindByBusinessIdAsync(int businessId, CancellationToken cancellationToken);
+    Task<IEnumerable<Customer>> FindAllByBusinessIdAsync(int businessId, CancellationToken cancellationToken = default);
 }

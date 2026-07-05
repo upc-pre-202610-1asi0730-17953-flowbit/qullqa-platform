@@ -1,3 +1,4 @@
 namespace Flowbit.Qullqa.Platform.Sales.Interfaces.Rest.Resources;
 
-public record CreateSaleResource(int BusinessId, int? CustomerId, string Description, string Currency = "PEN");
+public record CreateSaleResource(int? CustomerId, string PaymentMethod, string Currency, string Description,
+    IReadOnlyCollection<SaleLineResource> Lines);

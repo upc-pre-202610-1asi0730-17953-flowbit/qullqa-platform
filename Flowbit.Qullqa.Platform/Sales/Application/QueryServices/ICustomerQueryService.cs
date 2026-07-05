@@ -5,5 +5,6 @@ namespace Flowbit.Qullqa.Platform.Sales.Application.QueryServices;
 
 public interface ICustomerQueryService
 {
-    Task<IEnumerable<Customer>> Handle(GetCustomersByBusinessQuery query, CancellationToken cancellationToken);
+    Task<IEnumerable<Customer>> Handle(GetAllCustomersByBusinessIdQuery query, CancellationToken cancellationToken);
+    Task<Customer?> Handle(GetCustomerByIdQuery query, CancellationToken cancellationToken);
 }

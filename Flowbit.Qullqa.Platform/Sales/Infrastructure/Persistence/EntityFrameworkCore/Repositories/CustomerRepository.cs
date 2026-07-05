@@ -8,6 +8,8 @@ namespace Flowbit.Qullqa.Platform.Sales.Infrastructure.Persistence.EntityFramewo
 
 public class CustomerRepository(AppDbContext context) : BaseRepository<Customer>(context), ICustomerRepository
 {
-    public async Task<IEnumerable<Customer>> FindByBusinessIdAsync(int businessId, CancellationToken cancellationToken)
-        => await Context.Set<Customer>().Where(c => c.BusinessId == businessId).ToListAsync(cancellationToken);
+    public async Task<IEnumerable<Customer>> FindAllByBusinessIdAsync(int businessId, CancellationToken cancellationToken = default)
+    {
+        return await Context.Set<Customer>().Where(customer => customer.BusinessId == businessId).ToListAsync(cancellationToken);
+    }
 }
