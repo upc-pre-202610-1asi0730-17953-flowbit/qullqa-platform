@@ -1,7 +1,7 @@
-using Qullqa.Platform.v2.Subscription.Domain.Model.Commands;
-using Qullqa.Platform.v2.Subscription.Interfaces.Rest.Resources;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Subscription.Interfaces.Rest.Resources;
 
-namespace Qullqa.Platform.v2.Subscription.Interfaces.Rest.Transform;
+namespace Flowbit.Qullqa.Platform.Subscription.Interfaces.Rest.Transform;
 
 public static class CreatePlanCommandFromResourceAssembler
 {
