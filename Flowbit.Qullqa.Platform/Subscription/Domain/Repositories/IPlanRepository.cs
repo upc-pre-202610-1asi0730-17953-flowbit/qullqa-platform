@@ -1,7 +1,7 @@
-using Qullqa.Platform.v2.Shared.Domain.Repositories;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates;
 
-namespace Qullqa.Platform.v2.Subscription.Domain.Repositories;
+namespace Flowbit.Qullqa.Platform.Subscription.Domain.Repositories;
 
 /// <summary>Plan is a global catalog, not tenant-scoped — IBaseRepository's ListAsync() already returns every plan.</summary>
 public interface IPlanRepository : IBaseRepository<Plan>
