@@ -1,9 +1,9 @@
-using Qullqa.Platform.v2.Suppliers.Application.QueryServices;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Queries;
-using Qullqa.Platform.v2.Suppliers.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Suppliers.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
 
-namespace Qullqa.Platform.v2.Suppliers.Application.Internal.QueryServices;
+namespace Flowbit.Qullqa.Platform.Suppliers.Application.Internal.QueryServices;
 
 public class SupplierQueryService(ISupplierRepository supplierRepository) : ISupplierQueryService
 {
