@@ -3,9 +3,9 @@ using System.Text.Json;
 using System.Text.Unicode;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates;
 
-namespace Qullqa.Platform.v2.Subscription.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+namespace Flowbit.Qullqa.Platform.Subscription.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 
 public static class ModelBuilderExtensions
 {
