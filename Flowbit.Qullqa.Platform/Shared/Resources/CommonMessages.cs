@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Shared.Resources;
+namespace Flowbit.Qullqa.Platform.Shared.Resources;
 
 /// <summary>
 ///     Marker type for <c>IStringLocalizer&lt;CommonMessages&gt;</c>, resolving to
