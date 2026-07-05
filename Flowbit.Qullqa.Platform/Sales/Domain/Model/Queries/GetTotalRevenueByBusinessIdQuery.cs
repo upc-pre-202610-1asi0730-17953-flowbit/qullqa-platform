@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Sales.Domain.Model.Queries;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Queries;
 
 /// <summary>
 ///     The single source of truth for "total revenue" — Dashboard, POS and
