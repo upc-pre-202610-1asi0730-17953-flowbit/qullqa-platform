@@ -1,8 +1,8 @@
-using Qullqa.Platform.v2.Shared.Domain.Repositories;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Entities;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Entities;
 
-namespace Qullqa.Platform.v2.Suppliers.Domain.Repositories;
+namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
 
 public interface IPurchaseOrderRepository : IBaseRepository<PurchaseOrder>
 {
