@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Suppliers.Domain.Model.Entities;
+namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Entities;
 
 /// <summary>
 ///     A line of a purchase order. Lives inside the PurchaseOrder aggregate
