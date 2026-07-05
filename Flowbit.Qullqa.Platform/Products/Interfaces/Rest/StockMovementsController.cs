@@ -1,13 +1,13 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
-using Qullqa.Platform.v2.Iam.Infrastructure.Pipeline.Middleware.Attributes;
-using Qullqa.Platform.v2.Products.Application.QueryServices;
-using Qullqa.Platform.v2.Products.Domain.Model.Queries;
-using Qullqa.Platform.v2.Products.Interfaces.Rest.Transform;
-using Qullqa.Platform.v2.Shared.Application;
+using Flowbit.Qullqa.Platform.Iam.Infrastructure.Pipeline.Middleware.Attributes;
+using Flowbit.Qullqa.Platform.Products.Application.QueryServices;
+using Flowbit.Qullqa.Platform.Products.Domain.Model.Queries;
+using Flowbit.Qullqa.Platform.Products.Interfaces.Rest.Transform;
+using Flowbit.Qullqa.Platform.Shared.Application;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Qullqa.Platform.v2.Products.Interfaces.Rest;
+namespace Flowbit.Qullqa.Platform.Products.Interfaces.Rest;
 
 [Authorize]
 [ApiController]
