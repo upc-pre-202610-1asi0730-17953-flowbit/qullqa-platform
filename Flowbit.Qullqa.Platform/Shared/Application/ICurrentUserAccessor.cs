@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Shared.Application;
+namespace Flowbit.Qullqa.Platform.Shared.Application;
 
 /// <summary>
 ///     Resolves the identity of the currently authenticated request (user,
