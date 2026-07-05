@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Products.Domain.Model.Commands;
+namespace Flowbit.Qullqa.Platform.Products.Domain.Model.Commands;
 
 /// <summary>
 ///     Registers a stock intake: sums the quantity if an InventoryItem
