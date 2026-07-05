@@ -2,7 +2,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Qullqa.Platform.v2.Shared.Infrastructure.Pipeline.Middleware.Components;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Pipeline.Middleware.Components;
 
 /// <summary>
 ///     Catches any exception that escapes a controller/middleware further down
