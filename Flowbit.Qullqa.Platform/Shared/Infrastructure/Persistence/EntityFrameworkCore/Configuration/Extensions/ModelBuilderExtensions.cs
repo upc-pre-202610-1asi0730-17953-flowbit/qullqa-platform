@@ -1,7 +1,7 @@
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
-namespace Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
+namespace Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 
 /// <summary>
 ///     Model builder extensions for the database context.
