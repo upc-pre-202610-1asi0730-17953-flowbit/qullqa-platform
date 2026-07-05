@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Suppliers.Domain.Model.Errors;
+namespace Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Errors;
 
 public enum SuppliersError
 {
