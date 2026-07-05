@@ -1,17 +1,17 @@
 using Cortex.Mediator;
 using Microsoft.Extensions.Localization;
-using Qullqa.Platform.v2.Products.Interfaces.Acl;
-using Qullqa.Platform.v2.Shared.Application.Model;
-using Qullqa.Platform.v2.Shared.Domain.Repositories;
-using Qullqa.Platform.v2.Suppliers.Application.CommandServices;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Commands;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Errors;
-using Qullqa.Platform.v2.Suppliers.Domain.Model.Events;
-using Qullqa.Platform.v2.Suppliers.Domain.Repositories;
-using Qullqa.Platform.v2.Suppliers.Resources;
+using Flowbit.Qullqa.Platform.Products.Interfaces.Acl;
+using Flowbit.Qullqa.Platform.Shared.Application.Model;
+using Flowbit.Qullqa.Platform.Shared.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Suppliers.Application.CommandServices;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Commands;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Errors;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Model.Events;
+using Flowbit.Qullqa.Platform.Suppliers.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Suppliers.Resources;
 
-namespace Qullqa.Platform.v2.Suppliers.Application.Internal.CommandServices;
+namespace Flowbit.Qullqa.Platform.Suppliers.Application.Internal.CommandServices;
 
 public class PurchaseOrderCommandService(
     IPurchaseOrderRepository purchaseOrderRepository,
