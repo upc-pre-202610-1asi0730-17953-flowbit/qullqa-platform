@@ -1,3 +1,3 @@
 namespace Flowbit.Qullqa.Platform.Iam.Domain.Model.Queries;
 
-public record GetUserByIdQuery(int Id);
+public record GetUserByIdQuery(int UserId);

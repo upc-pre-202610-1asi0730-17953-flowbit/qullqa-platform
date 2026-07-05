@@ -7,5 +7,5 @@ public interface IUserQueryService
 {
     Task<User?> Handle(GetUserByIdQuery query, CancellationToken cancellationToken);
     Task<User?> Handle(GetUserByEmailQuery query, CancellationToken cancellationToken);
-    Task<IEnumerable<User>> Handle(GetAllUsersQuery query, CancellationToken cancellationToken);
+    Task<IEnumerable<User>> Handle(GetAllUsersByBusinessIdQuery query, CancellationToken cancellationToken);
 }

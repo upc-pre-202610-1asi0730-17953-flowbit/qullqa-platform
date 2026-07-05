@@ -8,12 +8,19 @@ namespace Flowbit.Qullqa.Platform.Iam.Infrastructure.Persistence.EntityFramework
 
 public class UserRepository(AppDbContext context) : BaseRepository<User>(context), IUserRepository
 {
-    public async Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken)
-        => await Context.Set<User>().FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+    public async Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        return await Context.Set<User>().FirstOrDefaultAsync(user => user.Email == email, cancellationToken);
+    }
 
-    public async Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken)
-        => await Context.Set<User>().AnyAsync(u => u.Email == email, cancellationToken);
+    public async Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        return await Context.Set<User>().AnyAsync(user => user.Email == email, cancellationToken);
+    }
 
-    public async Task<IEnumerable<User>> FindByBusinessIdAsync(int businessId, CancellationToken cancellationToken)
-        => await Context.Set<User>().Where(u => u.BusinessId == businessId).ToListAsync(cancellationToken);
+    public async Task<IEnumerable<User>> FindAllByBusinessIdAsync(int businessId,
+        CancellationToken cancellationToken = default)
+    {
+        return await Context.Set<User>().Where(user => user.BusinessId == businessId).ToListAsync(cancellationToken);
+    }
 }

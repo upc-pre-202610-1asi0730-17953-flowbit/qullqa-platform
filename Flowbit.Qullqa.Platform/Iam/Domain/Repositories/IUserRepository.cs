@@ -5,7 +5,7 @@ namespace Flowbit.Qullqa.Platform.Iam.Domain.Repositories;
 
 public interface IUserRepository : IBaseRepository<User>
 {
-    Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken);
-    Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken);
-    Task<IEnumerable<User>> FindByBusinessIdAsync(int businessId, CancellationToken cancellationToken);
+    Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken = default);
+    Task<bool> ExistsByEmailAsync(string email, CancellationToken cancellationToken = default);
+    Task<IEnumerable<User>> FindAllByBusinessIdAsync(int businessId, CancellationToken cancellationToken = default);
 }

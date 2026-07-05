@@ -1,13 +1,12 @@
-namespace Flowbit.Qullqa.Platform.Iam.Domain.Model;
+namespace Flowbit.Qullqa.Platform.Iam.Domain.Model.Errors;
 
 public enum IamError
 {
-    None,
-    UserNotFound,
-    EmailAlreadyTaken,
     InvalidCredentials,
+    EmailAlreadyTaken,
+    UserNotFound,
     BusinessNotFound,
-    RoleNotFound,
+    CurrentPasswordInvalid,
     OperationCancelled,
     DatabaseError,
     InternalServerError

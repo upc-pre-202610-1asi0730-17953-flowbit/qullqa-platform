@@ -7,6 +7,11 @@ namespace Flowbit.Qullqa.Platform.Iam.Application.CommandServices;
 public interface IUserCommandService
 {
     Task<Result<(User user, string token)>> Handle(SignInCommand command, CancellationToken cancellationToken);
-    Task<Result> Handle(SignUpCommand command, CancellationToken cancellationToken);
-    Task<Result<User>> Handle(UpdateUserCommand command, CancellationToken cancellationToken);
+
+    /// <summary>Also returns a token, matching the frontend's expectation of being auto-logged-in right after registering.</summary>
+    Task<Result<(User user, string token)>> Handle(SignUpCommand command, CancellationToken cancellationToken);
+    Task<Result<User>> Handle(InviteUserCommand command, CancellationToken cancellationToken);
+    Task<Result<User>> Handle(UpdateUserProfileCommand command, CancellationToken cancellationToken);
+    Task<Result> Handle(ChangePasswordCommand command, CancellationToken cancellationToken);
+    Task<Result> Handle(DeleteUserCommand command, CancellationToken cancellationToken);
 }
