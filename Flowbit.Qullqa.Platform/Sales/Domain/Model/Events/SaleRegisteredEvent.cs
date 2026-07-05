@@ -1,6 +1,6 @@
-using Qullqa.Platform.v2.Shared.Domain.Model.Events;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Events;
 
-namespace Qullqa.Platform.v2.Sales.Domain.Model.Events;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Events;
 
 /// <summary>
 ///     Raised after a sale is confirmed. Stock has already been decremented
