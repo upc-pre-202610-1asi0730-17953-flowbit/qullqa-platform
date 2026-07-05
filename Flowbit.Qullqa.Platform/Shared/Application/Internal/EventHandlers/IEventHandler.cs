@@ -1,7 +1,7 @@
 using Cortex.Mediator.Notifications;
-using Qullqa.Platform.v2.Shared.Domain.Model.Events;
+using Flowbit.Qullqa.Platform.Shared.Domain.Model.Events;
 
-namespace Qullqa.Platform.v2.Shared.Application.Internal.EventHandlers;
+namespace Flowbit.Qullqa.Platform.Shared.Application.Internal.EventHandlers;
 
 /// <summary>
 ///     Handles a domain event of type <typeparamref name="TEvent"/>.
