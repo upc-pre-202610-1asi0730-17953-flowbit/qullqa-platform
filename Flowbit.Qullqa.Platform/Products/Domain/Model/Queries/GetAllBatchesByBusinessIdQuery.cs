@@ -1,4 +1,4 @@
-namespace Qullqa.Platform.v2.Products.Domain.Model.Queries;
+namespace Flowbit.Qullqa.Platform.Products.Domain.Model.Queries;
 
 /// <summary>Used for the global "which products are expiring soon" calculation across the whole business.</summary>
 public record GetAllBatchesByBusinessIdQuery(int BusinessId);
