@@ -1,9 +1,9 @@
-using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
-using Qullqa.Platform.v2.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
-using Qullqa.Platform.v2.Subscription.Domain.Model.Aggregates;
-using Qullqa.Platform.v2.Subscription.Domain.Repositories;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Configuration;
+using Flowbit.Qullqa.Platform.Shared.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Model.Aggregates;
+using Flowbit.Qullqa.Platform.Subscription.Domain.Repositories;
 
-namespace Qullqa.Platform.v2.Subscription.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
+namespace Flowbit.Qullqa.Platform.Subscription.Infrastructure.Persistence.EntityFrameworkCore.Repositories;
 
 public class PlanRepository(AppDbContext context) : BaseRepository<Plan>(context), IPlanRepository
 {
