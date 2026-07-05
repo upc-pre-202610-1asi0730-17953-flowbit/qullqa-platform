@@ -1,3 +1,3 @@
-namespace Qullqa.Platform.v2.Sales.Domain.Model.Queries;
+namespace Flowbit.Qullqa.Platform.Sales.Domain.Model.Queries;
 
 public record GetAllSalesByBusinessIdQuery(int BusinessId, DateOnly? DateFrom = null, DateOnly? DateTo = null);
