@@ -70,9 +70,9 @@ public class AlertExpirationSweepJob(
             var daysToExpiry = batch.Expiration?.DayNumber - today.DayNumber;
 
             var existingExpired = await alertRepository.FindActiveByProductAndTypeAsync(batch.ProductId, AlertType.Expired,
-                batch.BatchId, cancellationToken);
+                batch.BatchId, null, cancellationToken);
             var existingExpiringSoon = await alertRepository.FindActiveByProductAndTypeAsync(batch.ProductId,
-                AlertType.Expiration, batch.BatchId, cancellationToken);
+                AlertType.Expiration, batch.BatchId, null, cancellationToken);
 
             if (isExpired)
             {

@@ -29,9 +29,9 @@ public class BatchRegisteredEventHandler(
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
 
         var existingExpired = await alertRepository.FindActiveByProductAndTypeAsync(domainEvent.ProductId, AlertType.Expired,
-            domainEvent.BatchId, cancellationToken);
+            domainEvent.BatchId, null, cancellationToken);
         var existingExpiringSoon = await alertRepository.FindActiveByProductAndTypeAsync(domainEvent.ProductId,
-            AlertType.Expiration, domainEvent.BatchId, cancellationToken);
+            AlertType.Expiration, domainEvent.BatchId, null, cancellationToken);
 
         var isExpired = ExpirationRules.IsExpired(domainEvent.Expiration, today);
         var isExpiringSoon = ExpirationRules.IsExpiringSoon(domainEvent.Expiration, today, thresholdDays);

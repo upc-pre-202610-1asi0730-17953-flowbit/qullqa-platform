@@ -7,8 +7,8 @@ public static class AlertResourceFromEntityAssembler
 {
     public static AlertResource ToResourceFromEntity(Alert alert)
     {
-        return new AlertResource(alert.Id, alert.BusinessId, alert.ProductId, alert.BatchId, alert.ProductName, alert.Type,
-            alert.Severity, alert.Message, alert.Status, alert.Date, alert.CurrentStock, alert.MinStock, alert.DaysToExpiry,
-            alert.Notified, alert.NotifiedAt, alert.ResolvedAt);
+        return new AlertResource(alert.Id, alert.BusinessId, alert.ProductId, alert.BatchId, alert.WarehouseId, alert.ProductName,
+            alert.Type, alert.Severity, alert.Message, alert.Status, alert.Date, alert.CurrentStock, alert.MinStock,
+            alert.DaysToExpiry, alert.Notified, alert.NotifiedAt, alert.ResolvedAt);
     }
 }

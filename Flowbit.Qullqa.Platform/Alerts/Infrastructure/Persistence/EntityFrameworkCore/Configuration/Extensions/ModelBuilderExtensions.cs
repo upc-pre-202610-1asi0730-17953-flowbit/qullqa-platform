@@ -4,6 +4,7 @@ using Flowbit.Qullqa.Platform.Alerts.Domain.Model.Entities;
 using Flowbit.Qullqa.Platform.Iam.Domain.Model.Aggregates;
 using Flowbit.Qullqa.Platform.Products.Domain.Model.Entities;
 using ProductAggregate = Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Product;
+using Warehouse = Flowbit.Qullqa.Platform.Products.Domain.Model.Aggregates.Warehouse;
 
 namespace Flowbit.Qullqa.Platform.Alerts.Infrastructure.Persistence.EntityFrameworkCore.Configuration.Extensions;
 
@@ -26,6 +27,8 @@ public static class ModelBuilderExtensions
             entity.HasOne<ProductAggregate>().WithMany().HasForeignKey(alert => alert.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
             entity.HasOne<Batch>().WithMany().HasForeignKey(alert => alert.BatchId)
+                .OnDelete(DeleteBehavior.SetNull).IsRequired(false);
+            entity.HasOne<Warehouse>().WithMany().HasForeignKey(alert => alert.WarehouseId)
                 .OnDelete(DeleteBehavior.SetNull).IsRequired(false);
         });
 

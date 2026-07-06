@@ -42,7 +42,8 @@ public class Alert(
     string message,
     int currentStock,
     int minStock,
-    int? daysToExpiry)
+    int? daysToExpiry,
+    int? warehouseId = null)
 {
     public Alert() : this(0, 0, null, string.Empty, AlertType.LowStock, AlertSeverity.Low, string.Empty, 0, 0, null)
     {
@@ -52,6 +53,16 @@ public class Alert(
     public int BusinessId { get; private set; } = businessId;
     public int ProductId { get; private set; } = productId;
     public int? BatchId { get; private set; } = batchId;
+
+    /// <summary>
+    ///     Which warehouse this LOW_STOCK/OUT_OF_STOCK alert is about — a
+    ///     product split across warehouses can be critically low in one and
+    ///     perfectly healthy in another, so the alert must say which one
+    ///     instead of reading as a business-wide problem. Null for
+    ///     EXPIRATION/EXPIRED alerts, which are scoped by BatchId instead.
+    /// </summary>
+    public int? WarehouseId { get; private set; } = warehouseId;
+
     public string ProductName { get; private set; } = productName;
     public string Type { get; private set; } = type;
     public string Severity { get; private set; } = severity;

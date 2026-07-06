@@ -5,6 +5,7 @@ public record AlertResource(
     int BusinessId,
     int ProductId,
     int? BatchId,
+    int? WarehouseId,
     string ProductName,
     string Type,
     string Severity,

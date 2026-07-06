@@ -9,4 +9,5 @@ public record CreateAlertResource(
     string Message,
     int CurrentStock,
     int MinStock,
-    int? DaysToExpiry);
+    int? DaysToExpiry,
+    int? WarehouseId = null);
