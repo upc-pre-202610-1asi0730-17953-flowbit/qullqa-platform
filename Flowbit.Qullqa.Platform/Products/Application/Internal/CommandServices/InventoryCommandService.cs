@@ -82,39 +82,59 @@ public class InventoryCommandService(
 
     /// <summary>
     ///     Decrements inventory after a confirmed sale. Not exposed as its own
-    ///     REST endpoint — called via IProductContextFacade by Sales &amp; POS
-    ///     (a future phase).
+    ///     REST endpoint — called via IProductContextFacade by Sales &amp; POS.
     ///
-    ///     KNOWN LIMITATION: takes no WarehouseId (matching Sales' current,
-    ///     not-yet-built contract), so it decrements the first InventoryItem
-    ///     found for this product with any stock. Correct for the common case
-    ///     (one warehouse per product); once a business genuinely splits stock
-    ///     across warehouses, Sales will need to pass an explicit WarehouseId.
+    ///     Takes no WarehouseId (matching Sales' contract, which sells a
+    ///     product without picking a warehouse), so it spreads the deduction
+    ///     across every InventoryItem the product has, oldest warehouse first
+    ///     (WarehouseId ascending — a business's warehouses are consumed in
+    ///     the order they were registered, e.g. "Almacén Principal" before a
+    ///     later-added secondary one), spilling into the next warehouse only
+    ///     once the current one is exhausted, until the full quantity is
+    ///     accounted for. Sales already validates the SUM across warehouses
+    ///     covers the sale (IProductContextFacade.GetAvailableStock) before
+    ///     calling this; only decrementing a single item here would silently
+    ///     under-deduct whenever no single warehouse alone holds the full
+    ///     quantity. Records one StockMovement per warehouse actually touched.
     /// </summary>
     public async Task<Result<InventoryItem>> Handle(RegisterStockSaleCommand command, CancellationToken cancellationToken)
     {
         if (command.Quantity <= 0)
             return Result<InventoryItem>.Failure(ProductError.InvalidQuantity, localizer[nameof(ProductError.InvalidQuantity)]);
 
-        var items = await inventoryItemRepository.FindAllByProductIdAsync(command.ProductId, cancellationToken);
-        var item = items.FirstOrDefault(candidate => candidate.StockUnit > 0);
+        var items = (await inventoryItemRepository.FindAllByProductIdAsync(command.ProductId, cancellationToken))
+            .Where(candidate => candidate.StockUnit > 0)
+            .OrderBy(candidate => candidate.WarehouseId)
+            .ToList();
 
-        if (item == null)
+        if (items.Sum(candidate => candidate.StockUnit) < command.Quantity)
             return Result<InventoryItem>.Failure(ProductError.InsufficientStock, localizer[nameof(ProductError.InsufficientStock)]);
 
-        item.RemoveStock(command.Quantity);
-        inventoryItemRepository.Update(item);
+        var remaining = command.Quantity;
+        var touchedItems = new List<InventoryItem>();
+        foreach (var item in items)
+        {
+            if (remaining <= 0) break;
 
-        await stockMovementRepository.AddAsync(
-            new StockMovement(command.ProductId, command.BusinessId, item.WarehouseId, command.Quantity,
-                StockMovementType.Sale, string.Empty, string.Empty),
-            cancellationToken);
+            var deducted = Math.Min(remaining, item.StockUnit);
+            item.RemoveStock(deducted);
+            inventoryItemRepository.Update(item);
+            touchedItems.Add(item);
+
+            await stockMovementRepository.AddAsync(
+                new StockMovement(command.ProductId, command.BusinessId, item.WarehouseId, deducted,
+                    StockMovementType.Sale, string.Empty, string.Empty),
+                cancellationToken);
+
+            remaining -= deducted;
+        }
 
         await unitOfWork.CompleteAsync(cancellationToken);
 
-        await PublishStockLevelChangedEvent(item, cancellationToken);
+        foreach (var item in touchedItems)
+            await PublishStockLevelChangedEvent(item, cancellationToken);
 
-        return Result<InventoryItem>.Success(item);
+        return Result<InventoryItem>.Success(touchedItems[0]);
     }
 
     /// <summary>
