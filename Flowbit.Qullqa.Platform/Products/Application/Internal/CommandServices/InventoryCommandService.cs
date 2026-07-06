@@ -86,13 +86,16 @@ public class InventoryCommandService(
     ///
     ///     Takes no WarehouseId (matching Sales' contract, which sells a
     ///     product without picking a warehouse), so it spreads the deduction
-    ///     across every InventoryItem the product has — starting with the
-    ///     best-stocked one — until the full quantity is accounted for.
-    ///     Sales already validates the SUM across warehouses covers the sale
-    ///     (IProductContextFacade.GetAvailableStock) before calling this; only
-    ///     decrementing a single item here would silently under-deduct
-    ///     whenever no single warehouse alone holds the full quantity.
-    ///     Records one StockMovement per warehouse actually touched.
+    ///     across every InventoryItem the product has, oldest warehouse first
+    ///     (WarehouseId ascending — a business's warehouses are consumed in
+    ///     the order they were registered, e.g. "Almacén Principal" before a
+    ///     later-added secondary one), spilling into the next warehouse only
+    ///     once the current one is exhausted, until the full quantity is
+    ///     accounted for. Sales already validates the SUM across warehouses
+    ///     covers the sale (IProductContextFacade.GetAvailableStock) before
+    ///     calling this; only decrementing a single item here would silently
+    ///     under-deduct whenever no single warehouse alone holds the full
+    ///     quantity. Records one StockMovement per warehouse actually touched.
     /// </summary>
     public async Task<Result<InventoryItem>> Handle(RegisterStockSaleCommand command, CancellationToken cancellationToken)
     {
@@ -101,7 +104,7 @@ public class InventoryCommandService(
 
         var items = (await inventoryItemRepository.FindAllByProductIdAsync(command.ProductId, cancellationToken))
             .Where(candidate => candidate.StockUnit > 0)
-            .OrderByDescending(candidate => candidate.StockUnit)
+            .OrderBy(candidate => candidate.WarehouseId)
             .ToList();
 
         if (items.Sum(candidate => candidate.StockUnit) < command.Quantity)
