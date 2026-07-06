@@ -12,6 +12,12 @@ namespace Flowbit.Qullqa.Platform.Alerts.Application.Internal.EventHandlers;
 ///     out-of-stock for the exact InventoryItem that just changed —
 ///     covers the 90% of cases where a concrete action (sale, intake,
 ///     adjustment) is what changed the stock.
+///
+///     Scoped per (product, warehouse): a product split across warehouses
+///     can be critically low in one and perfectly healthy in another, so
+///     each warehouse gets its own independent alert instead of one
+///     ambiguous "the product is low" flag that a healthy warehouse's event
+///     could refresh/hide.
 /// </summary>
 public class StockLevelChangedEventHandler(
     IAlertRepository alertRepository,
@@ -29,9 +35,9 @@ public class StockLevelChangedEventHandler(
         var lowStockEnabled = lowStockRule?.Enabled ?? true;
 
         var existingLowStock = await alertRepository.FindActiveByProductAndTypeAsync(domainEvent.ProductId, AlertType.LowStock,
-            null, cancellationToken);
+            null, domainEvent.WarehouseId, cancellationToken);
         var existingOutOfStock = await alertRepository.FindActiveByProductAndTypeAsync(domainEvent.ProductId,
-            AlertType.OutOfStock, null, cancellationToken);
+            AlertType.OutOfStock, null, domainEvent.WarehouseId, cancellationToken);
 
         var isOutOfStock = StockRules.IsOutOfStock(domainEvent.NewQuantity);
         var isLowStock = StockRules.IsLowStock(domainEvent.NewQuantity, domainEvent.MinimumStock);
@@ -42,7 +48,7 @@ public class StockLevelChangedEventHandler(
             if (existingOutOfStock != null) existingOutOfStock.RefreshStockInfo(AlertSeverity.High, message, domainEvent.NewQuantity);
             else await alertRepository.AddAsync(
                 new Alert(domainEvent.BusinessId, domainEvent.ProductId, null, domainEvent.ProductName, AlertType.OutOfStock,
-                    AlertSeverity.High, message, domainEvent.NewQuantity, domainEvent.MinimumStock, null),
+                    AlertSeverity.High, message, domainEvent.NewQuantity, domainEvent.MinimumStock, null, domainEvent.WarehouseId),
                 cancellationToken);
 
             existingLowStock?.Resolve();
@@ -53,14 +59,14 @@ public class StockLevelChangedEventHandler(
             if (existingLowStock != null) existingLowStock.RefreshStockInfo(AlertSeverity.Medium, message, domainEvent.NewQuantity);
             else await alertRepository.AddAsync(
                 new Alert(domainEvent.BusinessId, domainEvent.ProductId, null, domainEvent.ProductName, AlertType.LowStock,
-                    AlertSeverity.Medium, message, domainEvent.NewQuantity, domainEvent.MinimumStock, null),
+                    AlertSeverity.Medium, message, domainEvent.NewQuantity, domainEvent.MinimumStock, null, domainEvent.WarehouseId),
                 cancellationToken);
 
             existingOutOfStock?.Resolve();
         }
         else
         {
-            // Stock is healthy again — clear any previously active alert for this product.
+            // Stock is healthy again — clear any previously active alert for this product+warehouse.
             existingLowStock?.Resolve();
             existingOutOfStock?.Resolve();
         }

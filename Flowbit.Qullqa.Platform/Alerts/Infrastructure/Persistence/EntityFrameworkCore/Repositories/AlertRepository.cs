@@ -25,11 +25,11 @@ public class AlertRepository(AppDbContext context) : BaseRepository<Alert>(conte
     }
 
     public async Task<Alert?> FindActiveByProductAndTypeAsync(int productId, string type, int? batchId,
-        CancellationToken cancellationToken = default)
+        int? warehouseId = null, CancellationToken cancellationToken = default)
     {
         return await Context.Set<Alert>().FirstOrDefaultAsync(
             alert => alert.ProductId == productId && alert.Type == type && alert.BatchId == batchId
-                     && alert.Status != AlertStatus.Resolved,
+                     && alert.WarehouseId == warehouseId && alert.Status != AlertStatus.Resolved,
             cancellationToken);
     }
 }

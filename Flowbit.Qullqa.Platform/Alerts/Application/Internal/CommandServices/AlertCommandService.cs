@@ -20,7 +20,8 @@ public class AlertCommandService(
     public async Task<Result<Alert>> Handle(CreateAlertCommand command, CancellationToken cancellationToken)
     {
         var alert = new Alert(command.BusinessId, command.ProductId, command.BatchId, command.ProductName, command.Type,
-            command.Severity, command.Message, command.CurrentStock, command.MinStock, command.DaysToExpiry);
+            command.Severity, command.Message, command.CurrentStock, command.MinStock, command.DaysToExpiry,
+            command.WarehouseId);
         await alertRepository.AddAsync(alert, cancellationToken);
         await unitOfWork.CompleteAsync(cancellationToken);
         return Result<Alert>.Success(alert);
