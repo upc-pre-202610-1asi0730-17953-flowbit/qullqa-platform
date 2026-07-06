@@ -34,9 +34,19 @@ public class InventoryCommandService(
     ///     original 1:1 model where choosing a different warehouse silently
     ///     moved the product. Always records a StockMovement.
     /// </summary>
+    /// <summary>
+    ///     Quantity == 0 is allowed (only negative is rejected): registering a
+    ///     product with no initial stock still needs a real InventoryItem in
+    ///     its chosen warehouse, or it stays invisible everywhere — not shown
+    ///     as out-of-stock in that warehouse, and no StockLevelChangedEvent
+    ///     ever fires for it, so it can never trigger an OUT_OF_STOCK alert
+    ///     even when one clearly should exist. A StockMovement is only
+    ///     recorded when Quantity &gt; 0 — "received 0 units" isn't a
+    ///     meaningful audit entry.
+    /// </summary>
     public async Task<Result<InventoryItem>> Handle(RegisterStockIntakeCommand command, CancellationToken cancellationToken)
     {
-        if (command.Quantity <= 0)
+        if (command.Quantity < 0)
             return Result<InventoryItem>.Failure(ProductError.InvalidQuantity, localizer[nameof(ProductError.InvalidQuantity)]);
 
         var existingItem = await inventoryItemRepository.FindByProductAndWarehouseAsync(command.ProductId,
@@ -45,7 +55,7 @@ public class InventoryCommandService(
         InventoryItem item;
         if (existingItem != null)
         {
-            existingItem.AddStock(command.Quantity);
+            if (command.Quantity > 0) existingItem.AddStock(command.Quantity);
             if (command.MinimumStock.HasValue) existingItem.UpdateMinimumStock(command.MinimumStock.Value);
             inventoryItemRepository.Update(existingItem);
             item = existingItem;
@@ -68,10 +78,13 @@ public class InventoryCommandService(
             await inventoryItemRepository.AddAsync(item, cancellationToken);
         }
 
-        await stockMovementRepository.AddAsync(
-            new StockMovement(command.ProductId, command.BusinessId, command.WarehouseId, command.Quantity,
-                StockMovementType.Intake, command.Supplier ?? string.Empty, command.Note ?? string.Empty),
-            cancellationToken);
+        if (command.Quantity > 0)
+        {
+            await stockMovementRepository.AddAsync(
+                new StockMovement(command.ProductId, command.BusinessId, command.WarehouseId, command.Quantity,
+                    StockMovementType.Intake, command.Supplier ?? string.Empty, command.Note ?? string.Empty),
+                cancellationToken);
+        }
 
         await unitOfWork.CompleteAsync(cancellationToken);
 
